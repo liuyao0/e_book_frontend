@@ -1,0 +1,301 @@
+/*#wrapper-holder,#header-holder,.main-img-box,.main-img,#main,.main-book-box,.single-book,.round-box*/
+/*{*/
+/*    border:1px solid red;*/
+/*}*/
+
+body
+{
+    margin: 0;
+    background: #faf8f8;
+    overflow: scroll;
+}
+#wrapper-holder
+{
+    background: white;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#header-holder
+{
+    width:  1200px;
+    margin: 0 auto;
+    position: relative;
+    height: 90px;
+}
+
+header
+{
+    height: 90px;
+}
+
+#logo-holder
+{
+    width: 150px;
+    float: left;
+}
+
+#logo-holder a
+{
+    position: absolute;
+    top:0;
+    left: 0;
+    display: block;
+    width: 150px;
+    height: 75px;
+    text-indent: -9999px;
+}
+
+#header-middle
+{
+    margin-left: 150px;
+    margin-right: 121px;
+}
+
+#search-holder
+{
+    width: 40%;
+    height: 45px;
+    position: relative;
+    display: flex;
+    left: 30%;
+    top: 40px;
+}
+
+.icon-sousuo
+{
+    position: relative;
+    top:12px;
+    left: 25px;
+}
+#search-input
+{
+    border-radius: 15px;
+    flex: 4;
+    height:45px;
+    border: 3px solid #39cccc;
+    outline-style: none;
+    box-sizing: border-box;
+    padding-left: 25px;
+}
+
+#search-button
+{
+    text-decoration: none;
+    text-align: center;
+    line-height:45px ;
+    float: right;
+    border-radius: 15px;
+    flex: 1;
+    height: 45px;
+    color: white;
+    font-size: 20px ;
+    background-color: #39cccc;
+    border-style: none;
+    outline: none;
+}
+
+#search-button:active
+{
+    background-color: #27dede;
+}
+
+#search-button:hover
+{
+    background-color:#27dede;
+}
+
+#header-right
+{
+    display: block;
+    position:absolute;
+    top: 0px;
+    right: 2px;
+}
+
+#header-right>a
+{
+    font-size: 12px;
+    color: darkgray;
+    text-decoration:none;
+}
+
+#header-right>a:visited
+{
+    color: darkgray;
+}
+
+#header-right>a:hover
+{
+    color: #35a7a7;
+}
+
+
+
+#header-right>a:active
+{
+    color:#35a7a7;
+}
+
+#indexmain
+{
+    width:100%;
+    margin:0 auto;
+}
+
+.main-img-box
+{
+    width: 1085px;
+    height: 362px;
+    margin: 0 auto;
+}
+
+
+.main-img
+{
+    width:480px;
+    height: 300px;
+    float: left;
+    margin: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-img>img
+{
+    width: 480px;
+}
+
+.main-book-box
+{
+    width: 1080px;
+    height: 260px;
+    margin-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0;
+    display: flex;
+    justify-content:space-around;
+}
+
+.single-book
+{
+    width: 200px;
+    height: 255px;
+    margin-top: 0px;
+    padding: 0;
+}
+
+.bottom-book-img
+{
+    width: 150px;
+    height: 200px;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+
+}
+.bottom-book-img>img
+{
+    max-height: 200px;
+    max-width: 150px;
+    min-width: 130px;
+}
+
+.text-holder
+{
+    width:200px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.bottom-book-name
+{
+    font-size: 16px;
+    text-decoration: none;
+    color:black;
+}
+
+.bottom-book-name:hover
+{
+    font-weight: bold;
+
+}
+
+.bottom-book-author
+{
+    color:#999999;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+
+.bottom-book-price
+{
+    margin-top: 3px;
+    text-align: center;
+    font-size: 14px;
+    color:#00a8a8;
+    font-family: Arial;
+}
+
+#copyright
+{
+    font-family: "Times New Roman";
+    text-align: center;
+    color:rgb(153,153,153);
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size:10px;
+}
+.gray-line
+{
+    width: 90%;
+    margin: 0 auto;
+    height: 1px;
+    background-color:#e5e5e5;
+}
+
+.booklist
+{
+    border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #fdfdfd;
+    box-shadow: 0 0 5px #00b4b4;
+}
+
+.booklist
+{
+    border:2px solid #00a8a8;
+}
+
+.booklist tr ,.booklist th,.booklist td
+{
+    border:2px solid #888888;
+    padding: 10px;
+}
+
+.bookinfostore-head
+{
+    font-size: 14px;
+    height: 28px;
+    width: 90%;
+    background-color: #00a8a8;
+    margin:0 auto;
+    margin-top: 3px;
+    padding-left: 10px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.bookinfostore-head>span
+{
+    color: #f8f8f8;
+    line-height: 28px;
+    font-size: 22px;
+}

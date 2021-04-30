@@ -1,0 +1,27 @@
+.num-adjust
+{
+    width: 82px;
+    height: 25px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.num-adjust .num-input
+{
+    text-align: center;
+    width: 20px;
+}
+
+.num-adjust .num:focus
+{
+    outline: #39cccc solid 2px;
+    box-shadow: 0 0 0 4px #39cccc;
+    border: 2px solid rgba(255,255,255,1) ;
+}
+
+.num-adjust button
+{
+    outline: none;
+    width: 22px;
+    text-align: center;
+}

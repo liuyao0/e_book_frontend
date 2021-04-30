@@ -1,0 +1,127 @@
+body
+{
+    margin: 0;
+    background: #faf8f8;
+    overflow: scroll;
+}
+#wrapper-holder
+{
+    background: white;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#header-holder
+{
+    width:  1200px;
+    margin: 0 auto;
+    position: relative;
+    height: 90px;
+}
+
+header
+{
+    height: 90px;
+}
+
+#logo-holder
+{
+    width: 150px;
+    float: left;
+    position: relative;
+}
+
+#logo-holder a
+{
+    position: absolute;
+    top:0;
+    left: 0;
+    display: block;
+    width: 150px;
+    height: 75px;
+    text-indent: -9999px;
+}
+
+#header-middle
+{
+    margin-left: 150px;
+    margin-right: 121px;
+}
+
+#search-holder
+{
+    width: 40%;
+    height: 45px;
+    display: flex;
+    position: relative;
+}
+
+.icon-sousuo
+{
+    position: relative;
+    top:12px;
+    left: 25px;
+}
+#search-input
+{
+    border-radius: 15px;
+    flex: 4;
+    height:45px;
+    border: 3px solid #39cccc;
+    outline-style: none;
+    box-sizing: border-box;
+    padding-left: 25px;
+}
+
+#search-button
+{
+    float: right;
+    border-radius: 15px;
+    flex: 1;
+    height: 45px;
+    color: white;
+    font-size: 20px ;
+    background-color: #39cccc;
+    border-style: none;
+    outline: none;
+}
+
+#search-button:active
+{
+    background-color: #27dede;
+}
+
+#search-button:hover
+{
+    background-color:#27dede;
+}
+
+#header-right
+{
+    display: block;
+    position:absolute;
+    top: 0px;
+    right: 2px;
+}
+
+#header-right>a
+{
+    font-size: 12px;
+    color: darkgray;
+    text-decoration:none;
+}
+
+#header-right>a:visited
+{
+    color: darkgray;
+}
+
+#header-right>a:hover
+{
+    color: #35a7a7;
+}
+
+#header-right>a:active
+{
+    color:#35a7a7;
+}

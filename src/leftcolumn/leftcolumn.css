@@ -1,0 +1,87 @@
+.icon-left
+{
+    border: 2px solid #00b4b4;
+    box-shadow: 0 0 5px #00b4b4;
+    width: 20px;
+    height: 32px;
+    position: fixed;
+    top:calc(25% + 60px);
+    left: -1px;
+}
+
+.icon-left:hover
+{
+    background:#e3e3e3;
+}
+
+.icon-left>i
+{
+    font-size: 20px;
+    line-height: 32px;
+    color: #00b4b4;
+    text-shadow: 0 0 2px #00b4b4 ;
+}
+.left-holder
+{
+    left: -4px;
+    width: 150px;
+    position:fixed;
+    top:25%;
+    border: 2px solid  #39cccc;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #00b4b4;
+}
+
+.left-holder>.fun-holder
+{
+    width: 100%;
+    height: 50px;
+}
+
+.left-holder>.sep-line
+{
+    width: 100%;
+    height: 2px;
+    background-image: linear-gradient(-90deg,#39cccc,#00b4b4);
+    box-shadow: 0 0 3px #39cccc;
+}
+
+.fun-holder
+{
+    text-align: center;
+    background-image: linear-gradient(-90deg,#ffffff,#f8f8ff);
+}
+
+.fun-holder>a
+{
+    line-height: 50px;
+    text-decoration: none;
+    color:#2fa39d;
+    font-size: 18px;
+}
+
+.fun-holder>a:visited
+{
+    color:#2fa39d;
+}
+
+.fun-holder>a:hover
+{
+    color:#20b2aa;
+}
+
+.fun-holder>a:active
+{
+    color:#20b2aa;
+}
+
+.canbeseen
+{
+    display: block;
+}
+
+.cannotbeseen
+{
+    display: none;
+}
+
