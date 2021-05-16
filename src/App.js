@@ -6,7 +6,6 @@ import './assets/iconfont/iconfont.css';
 import {GrayLine} from "./assets/component/indexcomponent/indexcomponent";
 import {IndexMain} from "./assets/component/indexcomponent/indexcomponent";
 import {Copyright} from "./assets/component/indexcomponent/indexcomponent";
-import {SearchBar} from "./assets/component/indexcomponent/indexcomponent";
 import  {Leftcolumn} from './assets/component/leftcolumn/leftcolumn'
 import {Header} from "./assets/component/indexcomponent/indexcomponent";
 import {Cart} from './assets/component/cart/cart'
@@ -27,12 +26,27 @@ const data=[];
 
 
 class WrapperIndex extends  React.Component{
+    constructor(props) {
+        super(props);
+        let user_id=localStorage.getItem("user_id");
+        let user_name=localStorage.getItem("user_name");
+        if(user_name)
+            this.state={
+                user_name:user_name,
+                user_id:user_id
+            }
+        else
+            this.state={
+                user_name:null,
+                user_id:null
+            }
+    }
     render() {
         return(
             <div>
                 <div id={'wrapper-holder'}>
                     <div id={'wrapper'}>
-                        <Header/>
+                        <Header user_name={this.state.user_name} user_id={this.state.user_id}/>
                         <ThemeLine/>
                         <IndexMain/>
                         <Leftcolumn/>

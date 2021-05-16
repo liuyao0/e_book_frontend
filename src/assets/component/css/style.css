@@ -137,6 +137,13 @@ header
     color:#35a7a7;
 }
 
+#header-right>span
+{
+    font-size: 12px;
+    color: darkgray;
+    text-decoration:none;
+}
+
 #indexmain
 {
     width:100%;
