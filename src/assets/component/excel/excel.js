@@ -13,7 +13,24 @@ class Excel extends React.Component {
             search: false,
             preSearchData: null,
         };
+        fetch("http://localhost:8080/")
+            .then(response => response.json())
+            .then(bookData => {
+                bookData.map(function (row,rowidx){
+                    let book_id=row[0];
+                    row.splice(0,1);
+                    row.push(book_id);
+                })
+                this.setState({
+                        data: bookData
+                    }
+                )
+            }).catch(function (ex) {
+            console.log('parsing failed', ex)
+        })
+
     }
+
 
     sort = (e) => {
         let column = e.target.cellIndex;
@@ -131,8 +148,8 @@ class Excel extends React.Component {
                     return (
                         <tr key={rowidx}>{
                             row.map(function (cell, idx) {
-                                if(idx==6)
-                                    return ;
+                                if(idx>=6)
+                                    return;
                                 let content = cell;
                                 let edit = this.state.edit;
                                 if (edit && edit.row === rowidx && edit.cell === idx) {
@@ -142,7 +159,10 @@ class Excel extends React.Component {
                                         </form>
                                     );
                                 }
-                                return <td key={idx} data-row={rowidx}>{content}</td>;
+                                if(idx!=0)
+                                    return <td key={idx} data-row={rowidx}>{content}</td>;
+                                else
+                                    return <td key={idx} data-row={rowidx}><a className={"book-list-name"} href={'/bookdetail?book-id='+row[8]}>{content}</a></td>
                             }, this)}
                         </tr>
                     );
@@ -153,16 +173,6 @@ class Excel extends React.Component {
     }
 };
 
-Excel.propTypes = {
-    headers: PropTypes.arrayOf(
-        PropTypes.string
-    ),
-    initialData: PropTypes.arrayOf(
-        PropTypes.arrayOf(
-            PropTypes.string
-        )
-    ),
-};
 
 export default Excel;
 export {Excel}

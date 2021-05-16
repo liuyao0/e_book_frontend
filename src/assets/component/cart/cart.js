@@ -51,7 +51,7 @@ class Cart extends React.Component{
                     <thead>
                         <tr className={"list-head"}>
                             {cartHeaders.map(function (title,idx){
-                                return (<td key={idx}>{title}</td>);
+                                return (<td data-row={idx}>{title}</td>);
                                 })
                             }
                         </tr>

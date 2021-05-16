@@ -9,21 +9,73 @@ import Excel from "../excel/excel";
 class LoginForm extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            username:"",
+            password:""
+        }
     }
+    usernameChange=(e)=>
+    {
+        this.setState({
+                username:e.target.value
+            }
+        )
+    }
+    passwordChange=(e)=>
+    {
+        this.setState({
+                password:e.target.value
+            }
+        )
+    }
+    doLogin=()=>
+    {
+        let user_id=-2;
+        let res=(async ()=>{
+            try{
+                let result=await fetch("http://localhost:8080/login?username="+this.state.username+"&password="+this.state.password);
+                return result;
+            }catch (e){
+                console.log(e);
+            }
+        })();
+
+        res.then(response => response.json()).then(data=>{
+            user_id=parseInt(data,10);
+        }).then(()=>{
+            if(user_id===-1)
+                alert("用户名或密码错误！");
+            else
+            {
+                alert("登陆成功！");
+                localStorage.setItem("user_id",user_id);
+                localStorage.setItem("user_name",this.state.username);
+                window.location.href="http://localhost:3000"
+            }
+        })
+
+    }
+
+
     render=()=>{
         return(
             <div id="login-form">
-                <div className="login-title">登录</div>
+                <div className="login-title" >登录</div>
                 <div className="input-control">
                     <span className="icon-account" />
-                    <input className="form-input" type="text" id="user" placeholder="用户名"/>
+                    <input className="form-input" type="text" id="user" placeholder="用户名"
+                           value = {this.state.username}
+                           onChange={this.usernameChange}
+                    />
                 </div>
                 <div className="input-control">
                     <span className="icon-password"/>
-                    <input className="form-input" type="password" id="password" placeholder="密码"/>
+                    <input className="form-input" type="password" id="password" placeholder="密码"
+                           value = {this.state.password}
+                           onChange={this.passwordChange}/>
                 </div>
                 <div className="login-button-box">
-                    <button>登录</button>
+                    <button onClick={this.doLogin}>登录</button>
                 </div>
                 <div className="login-action">
                     <a onClick={this.props.handleClick} className="pull-right">注册</a>
@@ -57,7 +109,7 @@ class RegisterForm extends React.Component{
                     <div className="register-button-box-holder">
                         <div className="register-button-box">
                             <button className="register-button">注册</button>
-                            <button onClick={this.props.handleClick} className="cancel-button">取消</button>
+                            <button className="cancel-button">取消</button>
                         </div>
                     </div>
                 </div>
