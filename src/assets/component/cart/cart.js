@@ -48,9 +48,10 @@ class Cart extends React.Component{
 
     handleDelete=(e)=>
     {
+        fetch("http://localhost:8080/cartdel?user_id="+this.props.user_id.toString()+"&book_id="+this.state.cartData[e.target.dataset.idx][0].toString());
         let newdata=this.state.cartData;
         let total=0;
-        newdata.splice(e.target.key,1);
+        newdata.splice(e.target.dataset.idx,1);
         newdata.map(function (row,i){
             total+=row[6]*row[7];
         });
@@ -106,7 +107,7 @@ class Cart extends React.Component{
                                             }
                                         })
                                     }
-                                    <td className={'book-delete-td'}><button key={rowidx} onClick={this.handleDelete} className={"book-delete"}>移除</button></td>
+                                    <td className={'book-delete-td'}><button key={rowidx} onClick={this.handleDelete} data-idx={rowidx} className={"book-delete"}>移除</button></td>
                                 </tr>
                             );
                         })
@@ -114,7 +115,7 @@ class Cart extends React.Component{
                     </tbody>
                 </table>
                         <div className={"allbook-total"}>合计:¥{this.state.total.toFixed(2)}</div>
-                        <div style={{width:'100%',height:'55px'}}><a href={"/pay"} className={"pay-button"}>结算</a></div>
+                        <div style={{width:'100%',height:'55px'}}><a className={"pay-button"}>下单</a></div>
                 </div>
             </div>
         );

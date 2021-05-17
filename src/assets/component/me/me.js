@@ -42,7 +42,7 @@ class Order extends React.Component{
         this.state={load:false};
         let user_id=props.user_id;
         if(user_id===null) return;
-        fetch("http://localhost:8080/orderInfo?user-id="+user_id.toString())
+        fetch("http://localhost:8080/orderInfo?user_id="+user_id.toString())
             .then(response => response.json())
             .then(orderData => {
                 this.setState({
