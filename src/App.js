@@ -18,7 +18,6 @@ import {Me} from './assets/component/me/me'
 
 const headers=["书名","作者","出版社","售价","ISBN","库存"];
 
-const bookDetail=['[原书第三版]深入理解计算机系统','Randal E.Bryant','机械工业出版社',139];
 
 const data=[];
 
