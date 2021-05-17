@@ -114,21 +114,16 @@ class Logo extends React.Component{
 
 class HeaderRight extends React.Component{
     constructor(props) {
-        super(props);let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        super(props);
+
     }
-    render(){
-        if(!this.state.user_name)
+    quitLogin=()=>{
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("user_name");
+        window.location.href="http://localhost:3000/login"
+    }
+    render=()=>{
+        if(!this.props.user_name)
             return(
                 <div id="header-right">
                     <a href="/login">登录</a>
@@ -137,7 +132,12 @@ class HeaderRight extends React.Component{
         else
             return (
                 <div id={"header-right"}>
-                    你好,{this.state.user_name}！
+                    <span>
+                        你好,{this.props.user_name+"   "}
+                    </span>
+                    <a onClick={this.quitLogin}>
+                            退出
+                    </a>
                 </div>
             )
     }
@@ -152,7 +152,7 @@ class Header extends React.Component {
                     <header>
                         <Logo/>
                         <SearchBar/>
-                        <HeaderRight/>
+                        <HeaderRight user_id={this.props.user_id} user_name={this.props.user_name}/>
                     </header>
                 </div>
             );
@@ -161,7 +161,7 @@ class Header extends React.Component {
                 <div id={'header-holder'}>
                     <header>
                         <Logo/>
-                        <HeaderRight/>
+                        <HeaderRight user_id={this.props.user_id} user_name={this.props.user_name}/>
                     </header>
                 </div>
             );

@@ -7,7 +7,10 @@ import {NumComponent} from '../numadjust/numadjust'
 class BookDetail extends React.Component{
     constructor(props) {
         super(props);
-        this.state={load:false};
+        this.state={
+            load:false,
+            num:1
+        };
         let href=window.location.href;
         let book_id="";
         for(let i=href.length-1;href[i]>='0'&&href[i]<='9';i--)
@@ -34,9 +37,27 @@ class BookDetail extends React.Component{
         })
     }
 
+    addtoCart=()=>{
+        fetch("http://localhost:8080/cartadd?user_id="+this.props.user_id.toString()+
+            "&book_id="+this.state.data[0].toString()+
+            "&num="+this.state.num).then(response => response.json())
+            .then(res => {
+                console.log(res);
+                if(res===0)
+                    alert("加入成功！")
+                else
+                    alert("加入失败！")
+            }).catch(function (ex) {
+            console.log('parsing failed', ex)
+        })
+    }
+
 
     numChange=(e)=>{
-        this.setState({total:this.state.data[4]*e});
+        this.setState({
+            total:this.state.data[4]*e,
+            num:e
+        });
         }
 
 
@@ -62,7 +83,7 @@ class BookDetail extends React.Component{
                     </p>
                     <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange}/>
                     <h2 style={{display:'inline'}} id="book-detail-total" >¥{this.state.total.toFixed(2)}</h2>
-                    <button style={{display:"inline-block"}} className="book-detail-tocart">加入购物车</button>
+                    <button style={{display:"inline-block"}} className="book-detail-tocart" onClick={this.addtoCart}>加入购物车</button>
                 </div>
             </div>
         );
