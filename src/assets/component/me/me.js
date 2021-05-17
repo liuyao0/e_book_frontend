@@ -9,7 +9,7 @@ class MeAside extends React.Component{
     render=()=>{
         return (
             <div className={'me-aside'}>
-                <p>Welcome,{this.props.username}</p>
+                <p>Welcome,{this.props.user_name}</p>
                 <div><a href="#">用户管理</a></div>
                 <div><a href="#">书籍信息库</a></div>
             </div>
@@ -26,8 +26,8 @@ class Me extends React.Component{
         return (
             <div>
                 <div style={{width:'90%',margin:'0 auto',position:"relative",border:"1px solid #000",height:'600px'}}>
-                {/*<MeAside username={this.props.username}/>*/}
-                <Order user_id={1}/>
+                {/*<MeAside user_name={this.props.user_name}/>*/}
+                <Order user_id={this.props.user_id} user_name={this.props.user_name}/>
                 </div>
             </div>
     );
@@ -35,16 +35,13 @@ class Me extends React.Component{
     }
 
 }
+
 class Order extends React.Component{
     constructor(props) {
         super(props);
         this.state={load:false};
-        let href=window.location.href;
-        let user_id="";
-        for(let i=href.length-1;href[i]>='0'&&href[i]<='9';i--)
-            user_id+=href[i];
-        user_id=user_id.split("").reverse().join("");
-        if(user_id=="") user_id="0";
+        let user_id=props.user_id;
+        if(user_id===null) return;
         fetch("http://localhost:8080/orderInfo?user-id="+user_id.toString())
             .then(response => response.json())
             .then(orderData => {
@@ -57,6 +54,7 @@ class Order extends React.Component{
             console.log('parsing failed', ex)
         })
     }
+
 
     renderTable=()=>{
         console.log(this.state.data);
