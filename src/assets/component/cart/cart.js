@@ -24,12 +24,25 @@ class Cart extends React.Component{
                     }
                 )
 
-
             }).catch(function (ex) {
             console.log('parsing failed', ex)
         })
     }
 
+    cartToOrder=()=>{
+        fetch("http://localhost:8080/carttoorder?user_id="+this.props.user_id.toString()).then(response => response.json())
+            .then(res=> {
+                if(res==-2)
+                    alert("购物车为空！")
+                else
+                {
+                    alert("下单成功!")
+                    window.location.href="http://localhost:3000/me"
+                }
+            }).catch(function (ex) {
+            console.log('parsing failed', ex)
+        })
+    }
 
     numChange=(e,idx)=>{
         fetch("http://localhost:8080/cartchange?user_id="+this.props.user_id.toString()+"&book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString());
@@ -115,7 +128,7 @@ class Cart extends React.Component{
                     </tbody>
                 </table>
                         <div className={"allbook-total"}>合计:¥{this.state.total.toFixed(2)}</div>
-                        <div style={{width:'100%',height:'55px'}}><a className={"pay-button"}>下单</a></div>
+                        <div style={{width:'100%',height:'55px'}}><a onClick={this.cartToOrder} className={"pay-button"}>下单</a></div>
                 </div>
             </div>
         );

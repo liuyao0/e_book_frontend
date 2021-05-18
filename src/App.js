@@ -90,7 +90,7 @@ class WrapperBookDetail extends React.Component{
                     <Header user_id={this.state.user_id} user_name={this.state.user_name}/>
                     <ThemeLine/>
                     <GrayLine/>
-                    <BookDetail user_id={this.state.user_id} user_name={this.state.user_name} bookDetail={bookDetail}/>
+                    <BookDetail user_id={this.state.user_id} user_name={this.state.user_name}/>
                     <GrayLine/>
                     <Leftcolumn/>
                 </div>
