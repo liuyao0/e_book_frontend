@@ -29,7 +29,7 @@ class BookDetail extends React.Component{
                 console.log(bookDetail);
                 this.setState({
                     data:bookDetail,
-                    total:bookDetail[4],
+                    total:bookDetail[5],
                     load:true
                 })
             }).catch(function (ex) {
@@ -55,7 +55,7 @@ class BookDetail extends React.Component{
 
     numChange=(e)=>{
         this.setState({
-            total:this.state.data[4]*e,
+            total:this.state.data[5]*e,
             num:e
         });
         }
@@ -70,16 +70,16 @@ class BookDetail extends React.Component{
         return (
             <div id="book-detail-main">
                 <div id="book-detail-bookimage_out">
-                    <img src={this.state.data[7]} id="book-detail-bookimg"/>
+                    <img src={this.state.data[8]} id="book-detail-bookimg"/>
                 </div>
                 <div id="book-detail-book_info">
                     <h2>{this.state.data[1]}</h2>
                     <p className="nobr">作者：</p>
-                    <span href="#">{this.state.data[2]}</span><br/>
-                    <p className="nobr">出版社：</p>
                     <span href="#">{this.state.data[3]}</span><br/>
-                    <h2 id="book-detail-price">¥{this.state.data[4].toFixed(2)}</h2>
-                    <p id="book-detail-content">{this.state.data[8]}
+                    <p className="nobr">出版社：</p>
+                    <span href="#">{this.state.data[4]}</span><br/>
+                    <h2 id="book-detail-price">¥{this.state.data[5].toFixed(2)}</h2>
+                    <p id="book-detail-content">{this.state.data[6]}
                     </p>
                     <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange}/>
                     <h2 style={{display:'inline'}} id="book-detail-total" >¥{this.state.total.toFixed(2)}</h2>

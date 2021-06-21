@@ -12,7 +12,7 @@ import {Cart} from './assets/component/cart/cart'
 import {Excel} from './assets/component/excel/excel'
 import {Login} from './assets/component/login/login'
 import {BookDetail} from './assets/component/bookdetail/bookdetail'
-import {Order} from './assets/component/order/order'
+import {OrderPlace} from './assets/component/orderplace/orderPlace'
 import {Me} from './assets/component/me/me'
 
 const headers=["书名","作者","出版社","售价","ISBN","库存"];
@@ -20,26 +20,27 @@ const headers=["书名","作者","出版社","售价","ISBN","库存"];
 
 const data=[];
 
-
-
-
-
+function getLoginInf(that) {
+    let user_id=localStorage.getItem("user_id");
+    let user_name=localStorage.getItem("user_name");
+    let user_type=localStorage.getItem("user_type");
+    if(user_name)
+        that.state={
+            user_name:user_name,
+            user_id:parseInt(user_id,10),
+            user_type:parseInt(user_type,10)
+        }
+    else
+        that.state={
+            user_name:null,
+            user_id:null,
+            user_type:null
+        }
+}
 class WrapperIndex extends  React.Component{
     constructor(props) {
         super(props);
-
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
     }
     render=()=> {
         return(
@@ -70,18 +71,7 @@ class ThemeLine extends React.Component{
 class WrapperBookDetail extends React.Component{
     constructor(props) {
         super(props);
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
     }
     render=()=> {
         return (
@@ -103,18 +93,7 @@ class WrapperBookDetail extends React.Component{
 class WrapperSearch extends React.Component{
     constructor(props) {
         super(props);
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
     }
     render=()=>{
         return(
@@ -140,18 +119,7 @@ class WrapperSearch extends React.Component{
 class WrapperBookInfoStore extends React.Component{
     constructor(props) {
         super(props);
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
     }
 
     render=()=> {
@@ -184,18 +152,7 @@ let cartData = [
 class WrapperCart extends React.Component{
     constructor(props) {
         super(props);
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
     }
 
     render=()=> {
@@ -236,18 +193,7 @@ class WrapperOrder extends React.Component
 {
     constructor(props) {
         super(props);
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
 
     }
 
@@ -259,7 +205,7 @@ class WrapperOrder extends React.Component
                     <ThemeLine/>
                     <GrayLine/>
                     <main style={{margin:'0 auto'}}>
-                        <Order user_id={this.state.user_id} user_name={this.state.user_name}/>
+                        <OrderPlace user_id={this.state.user_id} user_name={this.state.user_name}/>
                     </main>
                     <GrayLine/>
                 </div>
@@ -270,18 +216,7 @@ class WrapperOrder extends React.Component
 class WrapperMe extends React.Component{
     constructor(props) {
         super(props);
-        let user_id=localStorage.getItem("user_id");
-        let user_name=localStorage.getItem("user_name");
-        if(user_name)
-            this.state={
-                user_name:user_name,
-                user_id:user_id
-            }
-        else
-            this.state={
-                user_name:null,
-                user_id:null
-            }
+        getLoginInf(this);
     }
 
     render=()=> {
@@ -292,9 +227,8 @@ class WrapperMe extends React.Component{
                         <Header drawSearchBar={false} user_name={this.state.user_name} user_id={this.state.user_id}/>
                         <ThemeLine/>
                         <GrayLine/>
-                        <div className="bookinfostore-head"><span>个人中心</span></div>
                         <main id={"indexmain"}>
-                            <Me user_name={this.state.user_name} user_id={this.state.user_id}/>
+                            <Me user_name={this.state.user_name} user_id={this.state.user_id} user_type={this.state.user_type}/>
                         </main>
                         <GrayLine/>
                     </div>

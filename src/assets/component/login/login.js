@@ -31,7 +31,7 @@ class LoginForm extends React.Component{
 
     doLogin=()=>
     {
-        let user_id=-2;
+        let user_id=-2,user_type=1
         let res=(async ()=>{
             try{
                 let result=await fetch("http://localhost:8080/login?username="+this.state.username+"&password="+this.state.password);
@@ -41,16 +41,21 @@ class LoginForm extends React.Component{
             }
         })();
 
-        res.then(response => response.json()).then(data=>{
-            user_id=parseInt(data,10);
+        res.then(response => response.text()).then(data=>{
+            data=data.split(",");
+            user_id=parseInt(data[0],10);
+            user_type=parseInt(data[1],10);
         }).then(()=>{
-            if(user_id===-1)
+            if(user_id===-1&&user_type===-1)
                 alert("用户名或密码错误！");
-            else
+            else if(user_type===-2)
             {
+                alert("您已被管理员禁止登陆！！！")
+            }else{
                 alert("登陆成功！");
                 localStorage.setItem("user_id",user_id);
                 localStorage.setItem("user_name",this.state.username);
+                localStorage.setItem("user_type",user_type)
                 window.location.href="http://localhost:3000"
             }
         })

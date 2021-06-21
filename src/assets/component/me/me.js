@@ -1,110 +1,160 @@
 import React from 'react';
 import './me.css'
+import {Order} from "../order/order";
 
-class MeAside extends React.Component{
-    constructor(props) {
-        super(props);
-    }
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import {GrayLine} from "../indexcomponent/indexcomponent";
+import {ptBR} from "@material-ui/core/locale";
+import {UserTable} from "../userList/usertable";
+import {BookManager} from "../bookmanager/bookmanager";
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
-    render=()=>{
-        return (
-            <div className={'me-aside'}>
-                <p>Welcome,{this.props.user_name}</p>
-                <div><a href="#">用户管理</a></div>
-                <div><a href="#">书籍信息库</a></div>
-            </div>
-        );
-    }
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
 }
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+    whited:{
+        backgroundColor:'#ddd',
+    }
+
+}));
+
+export default function SimpleTabs(props) {
+    const [value, setValue] = React.useState(0);
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    const classes=useStyles();
+    const renderTab=()=>{
+
+        let rows=[];
+        if(props.user_type===0) {
+            rows.push(<Tab label="我的订单" {...a11yProps(0)} />);
+            rows.push(<Tab label="用户管理" {...a11yProps(1)} />);
+            rows.push(<Tab label="图书管理" {...a11yProps(2)} />);
+            rows.push(<Tab label="订单管理" {...a11yProps(3)} />);
+
+            }
+        if(props.user_type===1){
+            rows.push(<Tab label="我的订单" {...a11yProps(0)} />);
+        }
+        return rows;
+    }
+
+    const renderTabPanel=()=>{
+        let rows=[]
+        if(props.user_type===0){
+            rows.push(<TabPanel value={value} index={0}>
+                    <Order user_id={props.user_id} showUserName={false}/>
+                </TabPanel>
+            );
+            rows.push(<TabPanel value={value} index={1}>
+                <UserTable/>
+            </TabPanel>
+           );
+            rows.push(<TabPanel value={value} index={2}>
+                <BookManager/>
+                </TabPanel>
+            );
+            rows.push(<TabPanel value={value} index={3}>
+                    <Order user_id={props.user_id} showUserName={true}/>
+                </TabPanel>
+            );
+        }
+        if(props.user_type===1){
+            rows.push(<TabPanel value={value} index={0}>
+                    <Order user_id={props.user_id} showUserName={false}/>
+                </TabPanel>
+            );
+        }
+        return rows;
+    }
+    return (
+        <div className={classes.root}>
+            <AppBar position="static" style={{height:"auto",background:"#2fa39d"}} >
+                <Tabs value={value} onChange={handleChange} classes={{indicator:classes.whited}}>
+                    {renderTab()}
+                </Tabs>
+            </AppBar>
+            {renderTabPanel()}
+        </div>
+    );
+}
+
+
 
 class Me extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            value:null,
+            onFilterByName:false,
+            onFilterByDate:false,
+            name:null,
+            dateBegin:null,
+            dateEnd:null
+        };
+    }
+
+    renderMain=()=>{
+        return (
+            <div>
+                <SimpleTabs user_type={this.props.user_type} user_id={this.props.user_id}/>
+            </div>
+        )
     }
 
     render=()=>{
         return (
             <div>
-                <div style={{width:'90%',margin:'0 auto',position:"relative",border:"1px solid #000",height:'600px'}}>
-                {/*<MeAside user_name={this.props.user_name}/>*/}
-                <Order user_id={this.props.user_id} user_name={this.props.user_name}/>
+                <div style={{width:'90%',margin:'0 auto',position:"relative",height:'auto',
+                    borderLeft:'1px solid #e5e5e5',
+                    borderRight:'1px solid #e5e5e5',
+                    borderBottom:'1px solid #e5e5e5'
+                }}>
+                    {this.renderMain()}
                 </div>
             </div>
     );
 
-    }
-
-}
-
-class Order extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state={load:false};
-        let user_id=props.user_id;
-        if(user_id===null) return;
-        fetch("http://localhost:8080/orderInfo?user_id="+user_id.toString())
-            .then(response => response.json())
-            .then(orderData => {
-                this.setState({
-                        data: orderData,
-                        load: true
-                    }
-                )
-            }).catch(function (ex) {
-            console.log('parsing failed', ex)
-        })
-    }
-
-
-    renderTable=()=>{
-        console.log(this.state.data);
-        let order_id=[];
-        let rows=[];
-        this.state.data.map((row, rowidx) => {
-            if (row[0] !== order_id)
-            {
-                order_id=row[0];
-                rows.push(<tr><th>订单编号：{row[0]}</th></tr>);
-                rows.push(<tr><th>时间：{row[1]}</th></tr>);
-            }
-
-            rows.push(
-                <tr>
-                    <td>{row[2]}</td>
-                    <td>{row[3]}</td>
-                    <td>{row[4]}</td>
-                    <td>{row[5]}</td>
-                    <td>{row[6]}</td>
-                </tr>
-        );
-        })
-
-        return(
-            <table>
-                <thead>
-                <tr>
-                    <td>书名</td>
-                    <td>作者</td>
-                    <td>出版社</td>
-                    <td>价格</td>
-                    <td>数量</td>
-                </tr>
-                </thead>
-                <tbody>
-                 {rows}
-                </tbody>
-            </table>
-        )
-    }
-    render=()=>{
-        if(!this.state.load)
-            return (<div/>)
-
-        return (
-            <div>
-                {this.renderTable()}
-            </div>
-        );
     }
 
 }
