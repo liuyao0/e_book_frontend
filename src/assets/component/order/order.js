@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {GrayLine} from "../indexcomponent/indexcomponent";
-import {TextField} from "@material-ui/core";
+import {NewDatePickers} from "../datepicker/datepickers";
 
 const useStyles = makeStyles({
     table: {
@@ -18,39 +18,9 @@ const useStyles = makeStyles({
     },
 });
 
-const useStylesDate= makeStyles((theme) => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 200,
-    },
-}));
 
-function DatePickers(props,ref) {
-    const classes = useStylesDate();
 
-    return (
-        <form className={classes.container} ref={ref} noValidate>
-            <TextField
-                id="date"
-                label={props.label}
-                type="date"
-                defaultValue="2021-05-30"
-                className={classes.textField}
-                InputLabelProps={{
-                    shrink: true,
-                }
-                }
-            />
-        </form>
-    );
-}
 
-const NewDatePickers=forwardRef(DatePickers);
 
 function OrderTable(props) {
     const classes = useStyles();

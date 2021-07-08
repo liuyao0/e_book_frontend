@@ -13,6 +13,7 @@ import {GrayLine} from "../indexcomponent/indexcomponent";
 import {ptBR} from "@material-ui/core/locale";
 import {UserTable} from "../userList/usertable";
 import {BookManager} from "../bookmanager/bookmanager";
+import {Ranking} from "../ranking/ranking";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -71,7 +72,7 @@ export default function SimpleTabs(props) {
             rows.push(<Tab label="用户管理" {...a11yProps(1)} />);
             rows.push(<Tab label="图书管理" {...a11yProps(2)} />);
             rows.push(<Tab label="订单管理" {...a11yProps(3)} />);
-
+            rows.push(<Tab label="统计" {...a11yProps(4)} />);
             }
         if(props.user_type===1){
             rows.push(<Tab label="我的订单" {...a11yProps(0)} />);
@@ -98,6 +99,9 @@ export default function SimpleTabs(props) {
                     <Order user_id={props.user_id} showUserName={true}/>
                 </TabPanel>
             );
+            rows.push(<TabPanel value={value} index={4}>
+                <Ranking/>
+            </TabPanel>)
         }
         if(props.user_type===1){
             rows.push(<TabPanel value={value} index={0}>

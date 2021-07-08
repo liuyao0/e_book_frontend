@@ -100,7 +100,7 @@ class OrderMain extends React.Component{
 
 }
 
-class OrderPlace extends React.Component{
+class Orderplace extends React.Component{
     constructor(props) {
         super(props);
     }
@@ -115,5 +115,5 @@ class OrderPlace extends React.Component{
     }
 }
 
-export default OrderPlace;
-export {OrderPlace}
+export default Orderplace;
+export {Orderplace}

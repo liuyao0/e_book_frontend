@@ -12,7 +12,7 @@ import {Cart} from './assets/component/cart/cart'
 import {Excel} from './assets/component/excel/excel'
 import {Login} from './assets/component/login/login'
 import {BookDetail} from './assets/component/bookdetail/bookdetail'
-import {OrderPlace} from './assets/component/orderplace/orderPlace'
+import {Orderplace} from './assets/component/orderplace/orderplace'
 import {Me} from './assets/component/me/me'
 
 const headers=["书名","作者","出版社","售价","ISBN","库存"];
@@ -205,7 +205,7 @@ class WrapperOrder extends React.Component
                     <ThemeLine/>
                     <GrayLine/>
                     <main style={{margin:'0 auto'}}>
-                        <OrderPlace user_id={this.state.user_id} user_name={this.state.user_name}/>
+                        <Orderplace user_id={this.state.user_id} user_name={this.state.user_name}/>
                     </main>
                     <GrayLine/>
                 </div>
