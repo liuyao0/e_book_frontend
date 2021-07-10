@@ -148,3 +148,23 @@
     color: #000;
     text-decoration: none;
 }
+
+.search-list-name
+{
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+}
+
+.search-list-name:active
+{
+    color: #00b4b4;
+    text-decoration: none;
+    font-weight: bold;
+}
+.search-list-name:hover
+{
+    color: #00b4b4;
+    text-decoration: underline;
+}
+

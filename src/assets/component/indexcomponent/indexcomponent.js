@@ -1,6 +1,7 @@
 import React from "react";
 
 import {DisplayinturnComponent} from '../displayinturn/dispalyinturn'
+import * as url from "url";
 
 const DisplayObject ={
     "interval": 1000,
@@ -68,7 +69,7 @@ class MainBookBox extends React.Component{
                 <SingleBook bookdata={data[4]}/>
             </div>
         );
-    }
+    } 
 }
 
 class SingleBook extends React.Component{
@@ -87,14 +88,22 @@ class SingleBook extends React.Component{
 }
 
 class SearchBar extends React.Component{
-    render() {
+    inputRef=React.createRef();
+    handleSearch=()=>{
+        let searchText=this.inputRef.value;
+        if(searchText.length===0)
+            window.location.href="http://localhost:3000/search";
+        else
+            window.location.href=encodeURI("http://localhost:3000/search?name="+searchText);
+
+    }
+    render=()=> {
         return (
             <div id="header-middle">
                 <div id="search-holder">
                     <span><i className="iconfont icon-sousuo"/></span>
-                    <input type="text" placeholder="深入理解计算机系统..." name="" id="search-input" defaultValue=""/>
-                    <a href={"/search"} id="search-button">搜索</a>
-
+                    <input type="text" ref={input=>this.inputRef=input} placeholder="深入理解计算机系统..." name="" id="search-input" defaultValue=""/>
+                    <button onClick={this.handleSearch} id="search-button">搜索</button>
                 </div>
             </div>
         );

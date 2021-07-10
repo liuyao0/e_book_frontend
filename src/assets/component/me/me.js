@@ -14,6 +14,7 @@ import {ptBR} from "@material-ui/core/locale";
 import {UserTable} from "../userList/usertable";
 import {BookManager} from "../bookmanager/bookmanager";
 import {Ranking} from "../ranking/ranking";
+import {OrdinaryStatistics} from "../ordinarystatistics/ordinarystatistics";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -71,11 +72,13 @@ export default function SimpleTabs(props) {
             rows.push(<Tab label="我的订单" {...a11yProps(0)} />);
             rows.push(<Tab label="用户管理" {...a11yProps(1)} />);
             rows.push(<Tab label="图书管理" {...a11yProps(2)} />);
-            rows.push(<Tab label="订单管理" {...a11yProps(3)} />);
+            rows.push(<Tab label="订单查询" {...a11yProps(3)} />);
             rows.push(<Tab label="统计" {...a11yProps(4)} />);
+            rows.push(<Tab label="购书统计" {...a11yProps(5)} />);
             }
         if(props.user_type===1){
             rows.push(<Tab label="我的订单" {...a11yProps(0)} />);
+            rows.push(<Tab label="购书统计" {...a11yProps(1)} />);
         }
         return rows;
     }
@@ -101,13 +104,19 @@ export default function SimpleTabs(props) {
             );
             rows.push(<TabPanel value={value} index={4}>
                 <Ranking/>
-            </TabPanel>)
+            </TabPanel>);
+            rows.push(<TabPanel value={value} index={5}>
+                <OrdinaryStatistics user_id={props.user_id}/>
+            </TabPanel>);
         }
         if(props.user_type===1){
             rows.push(<TabPanel value={value} index={0}>
                     <Order user_id={props.user_id} showUserName={false}/>
                 </TabPanel>
             );
+            rows.push(<TabPanel value={value} index={1}>
+                <OrdinaryStatistics user_id={props.user_id}/>
+            </TabPanel>);
         }
         return rows;
     }

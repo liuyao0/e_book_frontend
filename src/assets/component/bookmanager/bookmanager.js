@@ -15,6 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {act} from "@testing-library/react";
 const classes=makeStyles({
     table: {
         minWidth: 650,
@@ -249,7 +250,7 @@ class BookManagerNoStyle extends React.Component{
         this.state={
             preSearchData:[],
             data:[],
-            active:-1,
+            active:[],
             onFilterByName:false,
             FilterName:"",
             operateState:0
@@ -265,21 +266,26 @@ class BookManagerNoStyle extends React.Component{
     }
 
     changeActive=(idx)=>{
+        let active=this.state.active
+        if(active.indexOf(idx)<0)
+            active.push(idx);
+        else
+            active.splice(active.indexOf(idx),1);
         this.setState({
-            active:(idx===this.state.active)?-1:idx
+            active:active
             })
     }
 
     changeFilterState=()=>{
         if(this.state.onFilterByName) {
             this.setState({
-                active: -1,
+                active: [],
                 onFilterByName: false,
                 data: this.state.preSearchData,
             })
         }else{
             this.setState({
-                active:-1,
+                active:[],
                 onFilterByName:true,
             })
         }
@@ -295,7 +301,7 @@ class BookManagerNoStyle extends React.Component{
         })
         this.setState({
             data:newData,
-            active:-1
+            active:[]
         })
     }
 
@@ -304,7 +310,7 @@ class BookManagerNoStyle extends React.Component{
             return(
                 <div>
                     <input placeholder={"书名..."} ref={input=>this.nameInput=input}/>
-                    <button onClick={this.DoFilterByName}>确定</button>
+                    <button style={{margin:'5px'}} onClick={this.DoFilterByName}>确定</button>
                 </div>
             )
         }
@@ -321,8 +327,16 @@ class BookManagerNoStyle extends React.Component{
     }
 
     doChange=(bookRow)=>{
-        if(this.state.active===-1)
+        if(this.state.active.length===0)
+        {
+            alert("请选择一个条目！");
             return;
+        }
+        if(this.state.active.length>1)
+        {
+            alert("选择的条目过多！");
+            return;
+        }
         this.setState({
             onFilterByName:false,
             operateState:2
@@ -394,22 +408,26 @@ class BookManagerNoStyle extends React.Component{
     }
 
     doDel=()=>{
-        let idx=this.state.active;
-        if(idx===-1)
+        let active=this.state.active;
+        if(active.length===0)
         {
-            alert("请选择一行！")
+            alert("请选择一个条目！")
             return;
         }
-        fetch("http://localhost:8080//delbook?book-id="+this.state.data[idx][0]).then();
-        let newData=this.state.data;
-        let newPreSearchData=this.state.preSearchData;
-        newPreSearchData=newPreSearchData.filter((row)=>{
-            return (row[0]===newData[idx][0])
-        })
-        newData.splice(idx,1);
-        this.setState({
-            PreSearchData:newPreSearchData,
-            data:newData
+        active.map((idx,i)=>{
+            fetch("http://localhost:8080//delbook?book-id="+this.state.data[idx][0]).then(response => response.text())
+                .then(data=>{}).then(()=>{
+                if(i===active.length-1)
+                    fetch("http://localhost:8080/allBookInManager").then(response => response.json())
+                        .then(data => {
+                            this.setState({
+                                data:data,
+                                preSearchData:data
+                            })
+                            alert("删除成功！")
+                        });
+
+            });
         })
     }
 
@@ -430,9 +448,9 @@ class BookManagerNoStyle extends React.Component{
     renderOperate=()=>{
         return(
             <div>
-                <button onClick={this.doAdd}>增加</button>
-                <button onClick={this.doChange}>编辑</button>
-                <button onClick={this.doDel}>删除</button>
+                <button style={{margin:'5px'}} onClick={this.doAdd}>增加</button>
+                <button style={{margin:'5px'}} onClick={this.doChange}>编辑</button>
+                <button style={{margin:'5px'}} onClick={this.doDel}>删除</button>
             </div>
         )
     }
@@ -456,7 +474,7 @@ class BookManagerNoStyle extends React.Component{
         <TableBody>
         {this.state.data.map((row,idx) => (
             <TableRow key={row.name}
-                      className={this.state.active===idx?'bookManager-active':'bookManager-inactive'}
+                      className={this.state.active.indexOf(idx)>=0?'bookManager-active':'bookManager-inactive'}
                       onClick={(e)=>{this.changeActive(idx)}}
             >
                 <TableCell component="th" scope="row">
@@ -486,7 +504,7 @@ class BookManagerNoStyle extends React.Component{
     render=()=>{
         return(
         <div>
-            <button onClick={this.changeFilterState}>按书名筛选</button>
+            <button style={{margin:'5px'}} onClick={this.changeFilterState}>按书名筛选</button>
             {this.renderFilter()}
             {this.renderOperate()}
             {this.renderTable()}

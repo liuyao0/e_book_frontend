@@ -159,6 +159,9 @@ class Order extends React.Component{
         if(EndDate<BeginDate)
         {
             alert("错误的时间区间！");
+            this.setState({
+                data:[]
+            })
             return;
         }
         let data=this.state.preSearchData;
@@ -188,13 +191,12 @@ class Order extends React.Component{
     }
     BeginDateRef=React.createRef();
     EndDateRef=React.createRef();
-
     renderHead=()=>{
         if(this.state.onFilterByName)
             return(
                 <div>
                     <input placeholder={"书名..."} ref={input=>this.nameInput=input}/>
-                    <button onClick={this.DoFilterByName}>确定</button>
+                    <button style={{margin:'5px'}} onClick={this.DoFilterByName}>确定</button>
                 </div>
             )
         if(this.state.onFilterByDate)
@@ -202,7 +204,7 @@ class Order extends React.Component{
                 <div>
                     <NewDatePickers label={"起"} ref={this.BeginDateRef}/>
                     <NewDatePickers label={"止"} ref={this.EndDateRef}/>
-                    <button onClick={this.DoFilterByDate}>确定</button>
+                    <button style={{margin:'5px'}} onClick={this.DoFilterByDate}>确定</button>
                 </div>
             )
     }
@@ -240,8 +242,8 @@ class Order extends React.Component{
             return (<div/>)
         return (
             <div>
-                <button onClick={this.FilterByName}>按书名筛选</button>
-                <button onClick={this.FilterByDate}>按日期筛选</button>
+                <button style={{margin:'5px'}} onClick={this.FilterByName}>按书名筛选</button>
+                <button style={{margin:'5px'}} onClick={this.FilterByDate}>按日期筛选</button>
                 {this.renderHead()}
                 {this.renderMain()}
             </div>

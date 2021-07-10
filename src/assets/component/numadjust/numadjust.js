@@ -2,6 +2,9 @@ import React from 'react';
 import Cart from "../cart/cart";
 
 class NumComponent extends React.Component{
+    static defaultProps={
+        maxValue:-1
+    }
     constructor(props) {
         super(props);
         this.state={value:this.props.initval};
@@ -9,8 +12,12 @@ class NumComponent extends React.Component{
     }
     increaseNum=()=>{
         let val=this.state.value;
-        this.setState({value:this.state.value+1});
-        this.props.numChange(val+1,this.props.idx);
+        if(this.props.maxValue!==-1)
+            val=(val+1>this.props.maxValue)?val:val+1
+        else
+            val=val+1
+        this.setState({value:val});
+        this.props.numChange(val,this.props.idx)
 
     }
 
@@ -21,7 +28,6 @@ class NumComponent extends React.Component{
     }
 
     render=() =>{
-
         return(
             <div style={{display:"inline-block"}}>
                 <button onClick={this.decreaseNum}>-</button>
@@ -29,8 +35,8 @@ class NumComponent extends React.Component{
                 <button onClick={this.increaseNum}>+</button>
             </div>
         );
-
     }
+
 }
 
 

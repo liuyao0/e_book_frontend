@@ -30,15 +30,15 @@ class Cart extends React.Component{
     }
 
     cartToOrder=()=>{
-        fetch("http://localhost:8080/carttoorder?user_id="+this.props.user_id.toString()).then(response => response.json())
+        fetch("http://localhost:8080/carttoorder?user_id="+this.props.user_id.toString()).then(response => response.text())
             .then(res=> {
-                if(res==-2)
-                    alert("购物车为空！")
-                else
+                if(res.length===0)
                 {
                     alert("下单成功!")
                     window.location.href="http://localhost:3000/me"
                 }
+                else
+                    alert(res)
             }).catch(function (ex) {
             console.log('parsing failed', ex)
         })

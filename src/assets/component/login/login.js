@@ -31,6 +31,17 @@ class LoginForm extends React.Component{
 
     doLogin=()=>
     {
+        if(this.state.username.length===0)
+        {
+            alert("用户名为空！")
+            return;
+        }
+
+        if(this.state.password.length===0)
+        {
+            alert("密码为空！")
+            return;
+        }
         let user_id=-2,user_type=1
         let res=(async ()=>{
             try{
@@ -93,8 +104,136 @@ class LoginForm extends React.Component{
 class RegisterForm extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            username:"",
+            password:"",
+            againPassword:"",
+            email:"",
+            usernameExist:false,
+            passwordEqual:true,
+            emailValid:true,
+        }
     }
 
+    userNameChange=(e)=>{
+        let username=e.target.value;
+        if(username.length===0)
+        {
+            this.setState({
+                usernameExist:false
+            })
+            this.setState({username:username})
+            return;
+        }
+        this.setState({username:username})
+        fetch("http://localhost:8080/usernameExist?username="+username).then(response => response.text())
+            .then(data=>{
+                console.log(data);
+                if(parseInt(data,10)===0)
+                    this.setState({
+                        usernameExist:false
+                    })
+                else
+                    this.setState({
+                        usernameExist:true
+                    })
+            })
+    }
+
+    handlePasswordEqual=(password,againPassword)=>
+    {
+        if(password===againPassword||againPassword.length===0)
+        {
+            this.setState({
+                passwordEqual: true
+            })
+            return;
+        }
+        this.setState({
+            passwordEqual: false
+        })
+    }
+
+    passwordChange=(e)=>{
+        let password=e.target.value;
+        this.setState({password:password})
+        this.handlePasswordEqual(password,this.state.againPassword)
+    }
+    againPasswordChange=(e)=>{
+        let againPassword=e.target.value
+        this.setState({againPassword:againPassword})
+        this.handlePasswordEqual(this.state.password,againPassword)
+    }
+    emailChange=(e)=>{
+        let email=e.target.value
+        let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
+        if(myreg.test(email)||email.length===0)
+        {
+            this.setState({
+                email:email,
+                emailValid:true
+            })
+        }
+        else
+        {
+            this.setState({
+                email:email,
+                emailValid:false
+            })
+        }
+    }
+
+    handleRegister=()=>{
+        if(this.state.username.length===0)
+        {
+            alert("请输入用户名！")
+            return;
+        }
+
+        if(this.state.password.length===0)
+        {
+            alert("请输入密码！")
+            return;
+        }
+
+        if(this.state.againPassword.length===0)
+        {
+            alert("请输入重复密码！")
+            return;
+        }
+
+        if(this.state.email.length===0)
+        {
+            alert("请输入邮箱！")
+            return;
+        }
+
+        if(this.state.usernameExist)
+        {
+            alert("用户名已存在！")
+            return;
+        }
+
+        if(!this.state.passwordEqual)
+        {
+            alert("两次输入的密码不一致！")
+            return;
+        }
+
+        if(!this.state.emailValid)
+        {
+            alert("邮箱格式不正确！")
+            return;
+        }
+
+        fetch("http://localhost:8080/addUser?username="+this.state.username+"&password="+this.state.password+"&email="+this.state.email).then();
+        alert("注册成功！");
+        this.props.closeRegister();
+    }
+
+    testState=()=>{
+        console.log(this.state.username,this.state.password,this.state.againPassword,this.state.email);
+    }
     render=()=>{
         return(
             <div id="register-holder" className={this.props.onRegister?'appear':'disappear'}>
@@ -102,20 +241,30 @@ class RegisterForm extends React.Component{
                     <p id="reg-title">注册</p>
                     <div className="input-control">
                         <span className="inf">用户名</span>
-                        <input className="form-input" type="text" id="reg-user"/>
+                        <span style={{display:"inline-block",width:'25px'}}/>
+                        <span style={{color:'red'}} className={this.state.usernameExist?'inline-block-appear':'disappear'}>用户名已存在！</span>
+                        <input value={this.state.username} onChange={this.userNameChange} className="form-input" type="text" id="reg-user"/>
                     </div>
                     <div className="input-control">
-                        <p className="inf">密码</p>
-                        <input className="form-input" type="password" id="reg-password"/>
+                        <span className="inf">密码</span>
+                        <input value={this.state.password} onChange={this.passwordChange} className="form-input" type="password" id="reg-password"/>
                     </div>
                     <div className="input-control">
-                        <p className="inf">确认密码</p>
-                        <input className="form-input" type="password" id="reg-password2"/>
+                        <span className="inf">确认密码</span>
+                        <span style={{display:"inline-block",width:'15px'}}/>
+                        <span style={{color:'red'}} className={!this.state.passwordEqual?'inline-block-appear':'disappear'}>两次输入的密码不一致！</span>
+                        <input value={this.state.againPassword} onChange={this.againPasswordChange} className="form-input" type="password" id="reg-password2"/>
+                    </div>
+                    <div className="input-control">
+                        <span className="inf">邮箱</span>
+                        <span style={{display:"inline-block",width:'15px'}}/>
+                        <span style={{color:'red'}} className={!this.state.emailValid?'inline-block-appear':'disappear'}>邮箱格式不正确！</span>
+                        <input value={this.state.email} onChange={this.emailChange} className="form-input" type="email" id="reg-password2"/>
                     </div>
                     <div className="register-button-box-holder">
                         <div className="register-button-box">
-                            <button className="register-button">注册</button>
-                            <button className="cancel-button">取消</button>
+                            <button onClick={this.handleRegister} className="register-button">注册</button>
+                            <button onClick={this.props.closeRegister} className="cancel-button">取消</button>
                         </div>
                     </div>
                 </div>
@@ -159,7 +308,7 @@ class Login extends React.Component{
                        </div>
                    </div>
                    <div className={["overlay",this.state.onRegister?'appear':'disappear'].join(' ')}/>
-                   <RegisterForm handleClick={this.closeRegister} onRegister={this.state.onRegister}/>
+                   <RegisterForm closeRegister={this.closeRegister} onRegister={this.state.onRegister}/>
                </div>
              );
         }

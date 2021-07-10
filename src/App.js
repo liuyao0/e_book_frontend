@@ -14,6 +14,7 @@ import {Login} from './assets/component/login/login'
 import {BookDetail} from './assets/component/bookdetail/bookdetail'
 import {Orderplace} from './assets/component/orderplace/orderplace'
 import {Me} from './assets/component/me/me'
+import {BookEntry} from "./assets/component/bookentry/bookentry";
 
 const headers=["书名","作者","出版社","售价","ISBN","库存"];
 
@@ -104,7 +105,8 @@ class WrapperSearch extends React.Component{
                         <ThemeLine/>
                         <GrayLine/>
                         <main id={"indexmain"}>
-                            <Excel headers={headers} initialData={[]} canEdit={false}/>
+                            {/*<Excel headers={headers} initialData={[]} canEdit={false}/>*/}
+                            {<BookEntry/>}
                         </main>
                         <GrayLine/>
                     </div>

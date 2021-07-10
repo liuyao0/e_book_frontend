@@ -7,6 +7,7 @@ import {NumComponent} from '../numadjust/numadjust'
 class BookDetail extends React.Component{
     constructor(props) {
         super(props);
+
         this.state={
             load:false,
             num:1
@@ -78,10 +79,12 @@ class BookDetail extends React.Component{
                     <span href="#">{this.state.data[3]}</span><br/>
                     <p className="nobr">出版社：</p>
                     <span href="#">{this.state.data[4]}</span><br/>
+                    <p className="nobr">库存：</p>
+                    <span href="#">{this.state.data[7]}</span><br/>
                     <h2 id="book-detail-price">¥{this.state.data[5].toFixed(2)}</h2>
                     <p id="book-detail-content">{this.state.data[6]}
                     </p>
-                    <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange}/>
+                    <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange} maxValue={this.state.data[7]}/>
                     <h2 style={{display:'inline'}} id="book-detail-total" >¥{this.state.total.toFixed(2)}</h2>
                     <button style={{display:"inline-block"}} className="book-detail-tocart" onClick={this.addtoCart}>加入购物车</button>
                 </div>
