@@ -112,6 +112,7 @@ class Order extends React.Component{
         else this.setState({
                 onFilterByName:true,
                 onFilterByDate:false,
+                data:this.state.preSearchData
             }
         )
     }
@@ -127,6 +128,7 @@ class Order extends React.Component{
         else this.setState({
                 onFilterByName:false,
                 onFilterByDate:true,
+                data:this.state.preSearchData
             }
         )
     }
