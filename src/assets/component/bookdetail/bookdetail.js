@@ -38,16 +38,18 @@ class BookDetail extends React.Component{
         })
     }
 
-    addtoCart=()=>{
-        fetch("http://localhost:8080/cartadd?user_id="+this.props.user_id.toString()+
-            "&book_id="+this.state.data[0].toString()+
-            "&num="+this.state.num).then(response => response.json())
+    addToCart=()=>{
+        fetch("http://localhost:8080/cartadd?"+
+            "book_id="+this.state.data[0].toString()+
+            "&num="+this.state.num,{
+            credentials: 'include'
+        }).then(response => response.text())
             .then(res => {
                 console.log(res);
-                if(res===0)
+                if(res.length===0)
                     alert("加入成功！")
                 else
-                    alert("加入失败！")
+                    alert(res)
             }).catch(function (ex) {
             console.log('parsing failed', ex)
         })
@@ -86,7 +88,7 @@ class BookDetail extends React.Component{
                     </p>
                     <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange} maxValue={this.state.data[7]}/>
                     <h2 style={{display:'inline'}} id="book-detail-total" >¥{this.state.total.toFixed(2)}</h2>
-                    <button style={{display:"inline-block"}} className="book-detail-tocart" onClick={this.addtoCart}>加入购物车</button>
+                    <button style={{display:"inline-block"}} className="book-detail-tocart" onClick={this.addToCart}>加入购物车</button>
                 </div>
             </div>
         );

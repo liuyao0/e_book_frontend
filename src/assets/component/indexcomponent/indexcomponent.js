@@ -69,7 +69,7 @@ class MainBookBox extends React.Component{
                 <SingleBook bookdata={data[4]}/>
             </div>
         );
-    } 
+    }
 }
 
 class SingleBook extends React.Component{
@@ -127,9 +127,12 @@ class HeaderRight extends React.Component{
 
     }
     quitLogin=()=>{
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("user_name");
-        window.location.href="http://localhost:3000/login"
+        fetch("http://localhost:8080/exitLogin", {
+            credentials: 'include'
+        }).then(()=>{
+            window.location.href="http://localhost:3000/login"
+        })
+        ;
     }
     render=()=>{
         if(!this.props.user_name)
@@ -161,7 +164,7 @@ class Header extends React.Component {
                     <header>
                         <Logo/>
                         <SearchBar/>
-                        <HeaderRight user_id={this.props.user_id} user_name={this.props.user_name}/>
+                        <HeaderRight user_name={this.props.user_name}/>
                     </header>
                 </div>
             );
@@ -170,7 +173,7 @@ class Header extends React.Component {
                 <div id={'header-holder'}>
                     <header>
                         <Logo/>
-                        <HeaderRight user_id={this.props.user_id} user_name={this.props.user_name}/>
+                        <HeaderRight user_name={this.props.user_name}/>
                     </header>
                 </div>
             );

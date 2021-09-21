@@ -68,8 +68,7 @@ class Order extends React.Component{
             load:false,
             preSearchData:null
         };
-        let user_id=props.user_id;
-        if(user_id===null) return;
+
 
         if(this.props.showUserName)
         {
@@ -86,7 +85,9 @@ class Order extends React.Component{
                 console.log('parsing failed', ex)
             })
         }else{
-            fetch("http://localhost:8080/orderInfo?user_id="+user_id.toString())
+            fetch("http://localhost:8080/orderInfo",{
+                credentials: 'include'
+            })
                 .then(response => response.json())
                 .then(orderData => {
                     this.setState({

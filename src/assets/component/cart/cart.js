@@ -10,7 +10,9 @@ class Cart extends React.Component{
         let user_id=props.user_id;
         this.state={load:false};
 
-        fetch("http://localhost:8080/cart?user_id="+user_id.toString())
+        fetch("http://localhost:8080/cart",{
+            credentials: 'include'
+        })
             .then(response => response.json())
             .then(cartData => {
                 let total=0;
@@ -30,11 +32,13 @@ class Cart extends React.Component{
     }
 
     cartToOrder=()=>{
-        fetch("http://localhost:8080/carttoorder?user_id="+this.props.user_id.toString()).then(response => response.text())
+        fetch("http://localhost:8080/carttoorder",{
+            credentials: 'include'
+        }).then(response => response.text())
             .then(res=> {
                 if(res.length===0)
                 {
-                    alert("下单成功!")
+                    alert("服务器已接收订单！!")
                     window.location.href="http://localhost:3000/me"
                 }
                 else
@@ -45,7 +49,9 @@ class Cart extends React.Component{
     }
 
     numChange=(e,idx)=>{
-        fetch("http://localhost:8080/cartchange?user_id="+this.props.user_id.toString()+"&book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString());
+        fetch("http://localhost:8080/cartchange?book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString(),{
+            credentials: 'include'
+        });
         console.log(idx);
         let newData=this.state.cartData;
         newData[idx][7]=e;
@@ -61,7 +67,9 @@ class Cart extends React.Component{
 
     handleDelete=(e)=>
     {
-        fetch("http://localhost:8080/cartdel?user_id="+this.props.user_id.toString()+"&book_id="+this.state.cartData[e.target.dataset.idx][0].toString());
+        fetch("http://localhost:8080/cartdel?book_id="+this.state.cartData[e.target.dataset.idx][0].toString(),{
+            credentials: 'include'
+        });
         let newdata=this.state.cartData;
         let total=0;
         newdata.splice(e.target.dataset.idx,1);

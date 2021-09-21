@@ -1,13 +1,10 @@
 import './App.css';
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './assets/component/css/style.css';
 import './assets/iconfont/iconfont.css';
-import {GrayLine} from "./assets/component/indexcomponent/indexcomponent";
-import {IndexMain} from "./assets/component/indexcomponent/indexcomponent";
-import {Copyright} from "./assets/component/indexcomponent/indexcomponent";
-import  {Leftcolumn} from './assets/component/leftcolumn/leftcolumn'
-import {Header} from "./assets/component/indexcomponent/indexcomponent";
+import {Copyright, GrayLine, Header, IndexMain} from "./assets/component/indexcomponent/indexcomponent";
+import {Leftcolumn} from './assets/component/leftcolumn/leftcolumn'
 import {Cart} from './assets/component/cart/cart'
 import {Excel} from './assets/component/excel/excel'
 import {Login} from './assets/component/login/login'
@@ -21,34 +18,60 @@ const headers=["书名","作者","出版社","售价","ISBN","库存"];
 
 const data=[];
 
+
 function getLoginInf(that) {
-    let user_id=localStorage.getItem("user_id");
-    let user_name=localStorage.getItem("user_name");
-    let user_type=localStorage.getItem("user_type");
-    if(user_name)
-        that.state={
-            user_name:user_name,
-            user_id:parseInt(user_id,10),
-            user_type:parseInt(user_type,10)
-        }
-    else
-        that.state={
-            user_name:null,
-            user_id:null,
-            user_type:null
-        }
+    fetch("http://localhost:8080/getLoggedUsernameAndUserType",{
+        credentials: 'include'
+    })
+        .then(response => response.text())
+        .then(data => {
+            if(data.length===0)
+                that.setState({
+                    user_name:"",
+                    user_type:0,
+                    checkLogin: true
+                })
+            else {
+                data=data.split(",");
+                that.setState({
+                    user_name:data[0],
+                    user_type:parseInt(data[1],10),
+                    checkLogin: true
+                })
+            }
+        }).catch(function (ex) {
+        console.log('parsing failed', ex)
+    })
+    // if(user_name)
+    //     that.state={
+    //         user_name:user_name,
+    //         user_id:parseInt(user_id,10),
+    //         user_type:parseInt(user_type,10)
+    //     }
+    // else
+    //     that.state={
+    //         user_name:null,
+    //         user_id:null,
+    //         user_type:null
+    //     }
 }
 class WrapperIndex extends  React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
     }
+
     render=()=> {
+        if(!this.state.checkLogin)
+            return (<div/>)
         return(
             <div>
                 <div id={'wrapper-holder'}>
                     <div id={'wrapper'}>
-                        <Header user_name={this.state.user_name} user_id={this.state.user_id}/>
+                        <Header user_name={this.state.user_name} user_type={this.state.user_type}/>
                         <ThemeLine/>
                         <IndexMain/>
                         <Leftcolumn/>
@@ -72,16 +95,21 @@ class ThemeLine extends React.Component{
 class WrapperBookDetail extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
     }
     render=()=> {
+        if(!this.state.checkLogin)
+            return (<div/>)
         return (
             <div id="wrapper-holder">
                 <div id={"wrapper"}>
-                    <Header user_id={this.state.user_id} user_name={this.state.user_name}/>
+                    <Header user_name={this.state.user_name}/>
                     <ThemeLine/>
                     <GrayLine/>
-                    <BookDetail user_id={this.state.user_id} user_name={this.state.user_name}/>
+                    <BookDetail user_name={this.state.user_name}/>
                     <GrayLine/>
                     <Leftcolumn/>
                 </div>
@@ -94,14 +122,19 @@ class WrapperBookDetail extends React.Component{
 class WrapperSearch extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
     }
     render=()=>{
+        if(!this.state.checkLogin)
+            return (<div/>)
         return(
             <div>
                 <div id="wrapper-holder">
                     <div id="wrapper">
-                        <Header user_id={this.state.user_id} user_name={this.state.user_name}/>
+                        <Header user_name={this.state.user_name}/>
                         <ThemeLine/>
                         <GrayLine/>
                         <main id={"indexmain"}>
@@ -121,15 +154,20 @@ class WrapperSearch extends React.Component{
 class WrapperBookInfoStore extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
     }
 
     render=()=> {
+        if(!this.state.checkLogin)
+            return (<div/>)
         return(
             <div>
                 <div id="wrapper-holder">
                     <div id="wrapper">
-                        <Header user_id={this.state.user_id} user_name={this.state.user_name} drawSearchBar={false}/>
+                        <Header user_name={this.state.user_name} drawSearchBar={false}/>
                         <ThemeLine/>
                         <GrayLine/>
                         <div className="bookinfostore-head"><span>书籍信息库</span></div>
@@ -154,10 +192,15 @@ let cartData = [
 class WrapperCart extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
     }
 
     render=()=> {
+        if(!this.state.checkLogin)
+            return (<div/>)
         return(
             <div>
                 <div style={
@@ -166,13 +209,13 @@ class WrapperCart extends React.Component{
                     width: '1200px',
                     margin: '0 auto'
                 }}>
-                    <Header drawSearchBar={false} user_id={this.state.user_id} user_name={this.state.user_name}></Header>
+                    <Header drawSearchBar={false}  user_name={this.state.user_name}/>
                     <ThemeLine/>
                     <GrayLine/>
-                    <Cart user_id={this.state.user_id} user_name={this.state.user_name}/>
+                    <Cart user_name={this.state.user_name}/>
                     <GrayLine/>
                 </div>
-                <Leftcolumn></Leftcolumn>
+                <Leftcolumn/>
              <Copyright/>
             </div>
             );
@@ -195,11 +238,16 @@ class WrapperOrder extends React.Component
 {
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
 
     }
 
     render=()=> {
+        if(!this.state.checkLogin)
+            return (<div/>)
         return (
             <div id="wrapper-holder">
                 <div id="wrapper">
@@ -207,7 +255,7 @@ class WrapperOrder extends React.Component
                     <ThemeLine/>
                     <GrayLine/>
                     <main style={{margin:'0 auto'}}>
-                        <Orderplace user_id={this.state.user_id} user_name={this.state.user_name}/>
+                        <Orderplace user_name={this.state.user_name}/>
                     </main>
                     <GrayLine/>
                 </div>
@@ -218,19 +266,24 @@ class WrapperOrder extends React.Component
 class WrapperMe extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            checkLogin:false
+        }
         getLoginInf(this);
     }
 
     render=()=> {
+        if(!this.state.checkLogin)
+            return (<div/>)
         return (
             <div>
                 <div id="wrapper-holder">
                     <div id="wrapper">
-                        <Header drawSearchBar={false} user_name={this.state.user_name} user_id={this.state.user_id}/>
+                        <Header drawSearchBar={false} user_name={this.state.user_name}/>
                         <ThemeLine/>
                         <GrayLine/>
                         <main id={"indexmain"}>
-                            <Me user_name={this.state.user_name} user_id={this.state.user_id} user_type={this.state.user_type}/>
+                            <Me user_name={this.state.user_name} user_type={this.state.user_type}/>
                         </main>
                         <GrayLine/>
                     </div>
