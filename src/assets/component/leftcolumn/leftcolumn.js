@@ -29,6 +29,10 @@ class Leftcolumn extends React.Component{
                 <div onMouseLeave={this.pushLeft.bind(this)} className={["left-holder",this.state.display?'canbeseen':'cannotbeseen'].join(' ')}>
                     <div className="sep-line"/>
                     <div className="fun-holder">
+                        <a href="/chatroom">聊天室</a>
+                    </div>
+                    <div className="sep-line"/>
+                    <div className="fun-holder">
                         <a href="/cart">购物车</a>
                     </div>
                     <div className="sep-line"/>
