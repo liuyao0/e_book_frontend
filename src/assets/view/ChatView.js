@@ -3,6 +3,8 @@ import {Copyright, GrayLine, Header} from "../component/indexcomponent/indexcomp
 import {ThemeLine} from "../../App";
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
+import {ChatForm} from "../component/chatform/chatForm";
+
 
 class ChatView extends React.Component{
     constructor(props) {
@@ -27,6 +29,7 @@ class ChatView extends React.Component{
                     <Header drawSearchBar={false}  user_name={this.state.user_name}/>
                     <ThemeLine/>
                     <GrayLine/>
+                    <ChatForm/>
                     <GrayLine/>
                 </div>
                 <Leftcolumn/>
