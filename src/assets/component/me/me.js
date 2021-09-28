@@ -15,6 +15,8 @@ import {UserTable} from "../userList/usertable";
 import {BookManager} from "../bookmanager/bookmanager";
 import {Ranking} from "../ranking/ranking";
 import {OrdinaryStatistics} from "../ordinarystatistics/ordinarystatistics";
+import {server_ip}  from '../../../App'
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import {server_ip}  from '../../../App'
 import Cart from "../cart/cart";
 
 class NumComponent extends React.Component{

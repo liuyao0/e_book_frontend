@@ -1,6 +1,7 @@
 import React from "react"
 import './css/login.css'
 import {ThemeLine} from "../../App";
+import {server_ip} from '../../App'
 
 class LoginForm extends React.Component{
     constructor(props) {
@@ -39,7 +40,7 @@ class LoginForm extends React.Component{
             return;
         }
         let user_id=-2,user_type=1
-        fetch("http://localhost:8080/login?username=" + this.state.username + "&password=" + this.state.password, {
+        fetch("http://"+server_ip+"/login?username=" + this.state.username + "&password=" + this.state.password, {
             credentials: 'include'
         }).then(response => response.text()).then(data=>{
             data=data.split(",");
@@ -112,7 +113,7 @@ class RegisterForm extends React.Component{
             return;
         }
         this.setState({username:username})
-        fetch("http://localhost:8080/usernameExist?username="+username).then(response => response.text())
+        fetch("http://"+server_ip+"/usernameExist?username="+username).then(response => response.text())
             .then(data=>{
                 console.log(data);
                 if(parseInt(data,10)===0)
@@ -212,7 +213,7 @@ class RegisterForm extends React.Component{
             return;
         }
 
-        fetch("http://localhost:8080/addUser?username="+this.state.username+"&password="+this.state.password+"&email="+this.state.email).then();
+        fetch("http://"+server_ip+"/addUser?username="+this.state.username+"&password="+this.state.password+"&email="+this.state.email).then();
         alert("注册成功！");
         this.props.closeRegister();
     }

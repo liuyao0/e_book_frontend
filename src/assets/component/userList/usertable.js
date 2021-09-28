@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
+import {server_ip}  from '../../../App'
 
 
 class UserTable extends React.Component{
@@ -19,7 +20,7 @@ class UserTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={userData:[]}
-        fetch("http://localhost:8080/allUser").then(response => response.json())
+        fetch("http://"+server_ip+"/allUser").then(response => response.json())
             .then(userData => {
                 userData.map((row)=>{
                     if(row[4]===true)
@@ -43,13 +44,13 @@ class UserTable extends React.Component{
         this.setState({
             userData: newData
         })
-        fetch("http://localhost:8080/setUserState?user_id="+user_id.toString()+"&state="+value.toString()).then(
+        fetch("http://"+server_ip+"/setUserState?user_id="+user_id.toString()+"&state="+value.toString()).then(
             response => response.text()
         ).then(result=>{
             let res=parseInt(result,10);
             if(res===0)
                 alert('修改成功！')
-            else    
+            else
                 alert('修改失败！')
         });
     }

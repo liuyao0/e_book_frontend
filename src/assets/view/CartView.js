@@ -4,6 +4,7 @@ import {Cart} from "../component/cart/cart";
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
 import {ThemeLine} from "../../App";
+import {server_ip}  from '../../App'
 
 class CartView extends React.Component{
     constructor(props) {

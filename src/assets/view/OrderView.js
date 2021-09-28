@@ -3,6 +3,7 @@ import {GrayLine, Header} from "../component/indexcomponent/indexcomponent";
 import {Orderplace} from "../component/orderplace/orderplace";
 import {getLoginInf} from "../../App";
 import {ThemeLine} from "../../App";
+import {server_ip}  from '../../App'
 
 class OrderView extends React.Component
 {

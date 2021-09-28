@@ -13,8 +13,10 @@ import {OrderView} from "./assets/view/OrderView";
 import {IndexView} from "./assets/view/IndexView";
 import {ChatView} from "./assets/view/ChatView";
 
+export const server_ip="localhost:8080";
+
 export function getLoginInf(that) {
-    fetch("http://localhost:8080/getLoggedUsernameAndUserType",{
+    fetch("http://"+server_ip+"/getLoggedUsernameAndUserType",{
         credentials: 'include'
     })
         .then(response => response.text())

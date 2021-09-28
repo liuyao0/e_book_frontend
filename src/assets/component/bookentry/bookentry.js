@@ -1,4 +1,6 @@
 import React from "react";
+import {server_ip}  from '../../../App'
+
 let entryPerPage=10;
 const pageButtonStyle={width:'28px',height:'24px',textAlign:'center',marginLeft:'2px',marginRight:'2px'}
 class BookEntry extends React.Component{
@@ -10,7 +12,7 @@ class BookEntry extends React.Component{
             currentPage:0,
         }
 
-        fetch("http://localhost:8080/")
+        fetch("http://"+server_ip+"/")
             .then(response => response.json())
             .then(bookData => {
                 let href = decodeURI(window.location.href);

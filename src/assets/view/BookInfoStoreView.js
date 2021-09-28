@@ -4,6 +4,7 @@ import {Excel} from "../component/excel/excel";
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
 import {ThemeLine} from "../../App";
+import {server_ip}  from '../../App'
 
 const headers=["书名","作者","出版社","售价","ISBN","库存"];
 

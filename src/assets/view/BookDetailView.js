@@ -4,6 +4,7 @@ import {BookDetail} from "../component/bookdetail/bookdetail";
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
 import {ThemeLine} from "../../App";
+import {server_ip}  from '../../App'
 
 class BookDetailView extends React.Component{
     constructor(props) {

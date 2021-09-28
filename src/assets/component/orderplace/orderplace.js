@@ -1,5 +1,7 @@
 import React from 'react';
 import './orderplace.css'
+import {server_ip}  from '../../../App'
+
 const orderHeaders=['书名','作者','出版社','单价','数量','总价']
 class PersonalInfo extends React.Component
 {

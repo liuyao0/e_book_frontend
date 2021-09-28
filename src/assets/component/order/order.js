@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {GrayLine} from "../indexcomponent/indexcomponent";
 import {NewDatePickers} from "../datepicker/datepickers";
+import {server_ip}  from '../../../App'
 
 const useStyles = makeStyles({
     table: {
@@ -72,7 +73,7 @@ class Order extends React.Component{
 
         if(this.props.showUserName)
         {
-            fetch("http://localhost:8080/allOrder")
+            fetch("http://"+server_ip+"/allOrder")
                 .then(response => response.json())
                 .then(orderData => {
                     this.setState({
@@ -85,7 +86,7 @@ class Order extends React.Component{
                 console.log('parsing failed', ex)
             })
         }else{
-            fetch("http://localhost:8080/orderInfo",{
+            fetch("http://"+server_ip+"/orderInfo",{
                 credentials: 'include'
             })
                 .then(response => response.json())

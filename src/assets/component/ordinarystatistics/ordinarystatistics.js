@@ -7,6 +7,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
+import {server_ip}  from '../../../App'
 
 class OrdinaryStatistics extends React.Component{
     BeginDateRef=React.createRef();
@@ -48,7 +49,7 @@ class OrdinaryStatistics extends React.Component{
             return;
         }
         let bookData=[],userData=[];
-        fetch("http://localhost:8080/getConsumeBook?begin_time="+BeginDate.getTime().toString()+
+        fetch("http://"+server_ip+"/getConsumeBook?begin_time="+BeginDate.getTime().toString()+
             "&end_time="+EndDate.getTime().toString(),{
              credentials:"include"
             }

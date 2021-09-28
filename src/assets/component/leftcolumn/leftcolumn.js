@@ -2,7 +2,7 @@ import './leftcolumn.css';
 import React from 'react';
 import './iconfont.css';
 import DisplayinturnComponent from "../displayinturn/dispalyinturn";
-
+import {server_ip}  from '../../../App'
 
 class Leftcolumn extends React.Component{
     constructor(props){

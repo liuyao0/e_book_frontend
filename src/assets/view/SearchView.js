@@ -4,6 +4,7 @@ import {BookEntry} from "../component/bookentry/bookentry";
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
 import {ThemeLine} from "../../App";
+import {server_ip}  from '../../App'
 
 class SearchView extends React.Component{
     constructor(props) {

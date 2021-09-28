@@ -1,7 +1,7 @@
 import React from 'react';
 import './bookdetail.css'
 import {NumComponent} from '../numadjust/numadjust'
-
+import {server_ip}  from '../../../App'
 
 
 class BookDetail extends React.Component{
@@ -18,7 +18,7 @@ class BookDetail extends React.Component{
             book_id+=href[i];
         book_id=book_id.split("").reverse().join("");
 
-        fetch("http://localhost:8080/bookdetail?book-id="+book_id)
+        fetch("http://"+server_ip+"/bookdetail?book-id="+book_id)
             .then(response => response.json())
             .then(bookData => {
                 let bookDetail=[];
@@ -39,7 +39,7 @@ class BookDetail extends React.Component{
     }
 
     addToCart=()=>{
-        fetch("http://localhost:8080/cartadd?"+
+        fetch("http://"+server_ip+"/cartadd?"+
             "book_id="+this.state.data[0].toString()+
             "&num="+this.state.num,{
             credentials: 'include'

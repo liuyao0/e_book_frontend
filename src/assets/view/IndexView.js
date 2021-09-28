@@ -3,6 +3,7 @@ import {Copyright, Header, IndexMain} from "../component/indexcomponent/indexcom
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
 import {ThemeLine} from "../../App";
+import {server_ip}  from '../../App'
 
 class IndexView extends  React.Component{
     constructor(props) {

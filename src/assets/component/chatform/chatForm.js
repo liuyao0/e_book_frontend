@@ -1,4 +1,6 @@
 import React from "react";
+import {server_ip}  from '../../../App'
+
 let ws;
 class ChatForm extends React.Component{
     constructor(props) {
@@ -28,7 +30,7 @@ class ChatForm extends React.Component{
             nickname:nickname,
             messages:[]
         })
-        ws=new WebSocket("ws://localhost:8080/chat/"+nickname);
+        ws=new WebSocket("ws://"+server_ip+"/chat/"+nickname);
         ws.onmessage=this.onMessage;
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-
+import {server_ip}  from '../../../App'
 import {DisplayinturnComponent} from '../displayinturn/dispalyinturn'
 import * as url from "url";
 
@@ -127,7 +127,7 @@ class HeaderRight extends React.Component{
 
     }
     quitLogin=()=>{
-        fetch("http://localhost:8080/exitLogin", {
+        fetch("http://"+server_ip+"/exitLogin", {
             credentials: 'include'
         }).then(()=>{
             window.location.href="http://localhost:3000/login"

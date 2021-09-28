@@ -1,6 +1,7 @@
 import React from 'react';
 import './cart.css'
 import {NumComponent} from '../numadjust/numadjust'
+import {server_ip}  from '../../../App'
 const cartHeaders=['书名','作者','出版社','单价','数量','总价','操作'];
 
 
@@ -10,7 +11,7 @@ class Cart extends React.Component{
         let user_id=props.user_id;
         this.state={load:false};
 
-        fetch("http://localhost:8080/cart",{
+        fetch("http://"+server_ip+"/cart",{
             credentials: 'include'
         })
             .then(response => response.json())
@@ -32,7 +33,7 @@ class Cart extends React.Component{
     }
 
     cartToOrder=()=>{
-        fetch("http://localhost:8080/carttoorder",{
+        fetch("http://"+server_ip+"/carttoorder",{
             credentials: 'include'
         }).then(response => response.text())
             .then(res=> {
@@ -49,7 +50,7 @@ class Cart extends React.Component{
     }
 
     numChange=(e,idx)=>{
-        fetch("http://localhost:8080/cartchange?book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString(),{
+        fetch("http://"+server_ip+"/cartchange?book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString(),{
             credentials: 'include'
         });
         console.log(idx);
@@ -67,7 +68,7 @@ class Cart extends React.Component{
 
     handleDelete=(e)=>
     {
-        fetch("http://localhost:8080/cartdel?book_id="+this.state.cartData[e.target.dataset.idx][0].toString(),{
+        fetch("http://"+server_ip+"/cartdel?book_id="+this.state.cartData[e.target.dataset.idx][0].toString(),{
             credentials: 'include'
         });
         let newdata=this.state.cartData;

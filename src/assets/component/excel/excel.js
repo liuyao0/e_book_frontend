@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-
+import {server_ip}  from '../../../App'
 class Excel extends React.Component {
 
     constructor(props) {
@@ -13,7 +13,7 @@ class Excel extends React.Component {
             search: false,
             preSearchData: null,
         };
-        fetch("http://localhost:8080/")
+        fetch("http://"+server_ip+"/")
             .then(response => response.json())
             .then(bookData => {
                 bookData.map(function (row,rowidx){

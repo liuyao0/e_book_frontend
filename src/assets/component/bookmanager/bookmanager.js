@@ -16,6 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {act} from "@testing-library/react";
+import {server_ip}  from '../../../App'
 const classes=makeStyles({
     table: {
         minWidth: 650,
@@ -51,7 +52,7 @@ class FormDialog extends React.Component {
             })
 
             if(nextProps.book_id!==-1){
-                fetch("http://localhost:8080/bookdetail?book-id="+nextProps.book_id)
+                fetch("http://"+server_ip+"/bookdetail?book-id="+nextProps.book_id)
                     .then(response => response.json())
                     .then(bookData => {
                         let bookDetail=[];
@@ -256,7 +257,7 @@ class BookManagerNoStyle extends React.Component{
             operateState:0
         }
 
-        fetch("http://localhost:8080/allBookInManager").then(response => response.json())
+        fetch("http://"+server_ip+"/allBookInManager").then(response => response.json())
             .then(data => {
                 this.setState({
                     data:data,
@@ -374,7 +375,7 @@ class BookManagerNoStyle extends React.Component{
                 "imgUrl":bookRow[8]
             })
         }
-        fetch("http://localhost:8080/changeBook",infToService).then(response=>response.text())
+        fetch("http://"+server_ip+"/changeBook",infToService).then(response=>response.text())
             .then(res=>{
                 res=parseInt(res,10);
                 newRow[0]=res;
@@ -415,10 +416,10 @@ class BookManagerNoStyle extends React.Component{
             return;
         }
         active.map((idx,i)=>{
-            fetch("http://localhost:8080//delbook?book-id="+this.state.data[idx][0]).then(response => response.text())
+            fetch("http://"+server_ip+"//delbook?book-id="+this.state.data[idx][0]).then(response => response.text())
                 .then(data=>{}).then(()=>{
                 if(i===active.length-1)
-                    fetch("http://localhost:8080/allBookInManager").then(response => response.json())
+                    fetch("http://"+server_ip+"/allBookInManager").then(response => response.json())
                         .then(data => {
                             this.setState({
                                 data:data,

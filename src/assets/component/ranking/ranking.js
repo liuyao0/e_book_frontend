@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {NewDatePickers} from "../datepicker/datepickers";
+import {server_ip}  from '../../../App'
 
 class BookRanking extends React.Component{
 
@@ -154,7 +155,7 @@ class Ranking extends React.Component{
             return;
         }
         let bookData=[],userData=[];
-        fetch("http://localhost:8080/getSalesRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
+        fetch("http://"+server_ip+"/getSalesRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
             .then(data => {
                 bookData=data;
                 }
@@ -165,7 +166,7 @@ class Ranking extends React.Component{
             }
         );
 
-        fetch("http://localhost:8080/getConsumeRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
+        fetch("http://"+server_ip+"/getConsumeRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
             .then(data => {
                     userData=data;
                 }

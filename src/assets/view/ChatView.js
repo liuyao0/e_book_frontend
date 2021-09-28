@@ -4,6 +4,7 @@ import {ThemeLine} from "../../App";
 import {Leftcolumn} from "../component/leftcolumn/leftcolumn";
 import {getLoginInf} from "../../App";
 import {ChatForm} from "../component/chatform/chatForm";
+import {server_ip}  from '../../App'
 
 
 class ChatView extends React.Component{
