@@ -1,7 +1,7 @@
 import React from 'react';
 import './cart.css'
 import {NumComponent} from '../numadjust/numadjust'
-import {server_ip}  from '../../../App'
+import {frontend_ip, server_ip} from '../../../App'
 const cartHeaders=['书名','作者','出版社','单价','数量','总价','操作'];
 
 
@@ -40,7 +40,7 @@ class Cart extends React.Component{
                 if(res.length===0)
                 {
                     alert("服务器已接收订单！!")
-                    window.location.href="http://localhost:3000/me"
+                    window.location.href="http://"+frontend_ip+"/me";
                 }
                 else
                     alert(res)

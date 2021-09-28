@@ -1,5 +1,5 @@
 import React from "react";
-import {server_ip}  from '../../../App'
+import {frontend_ip, server_ip} from '../../../App'
 import {DisplayinturnComponent} from '../displayinturn/dispalyinturn'
 import * as url from "url";
 
@@ -92,9 +92,9 @@ class SearchBar extends React.Component{
     handleSearch=()=>{
         let searchText=this.inputRef.value;
         if(searchText.length===0)
-            window.location.href="http://localhost:3000/search";
+            window.location.href="http://"+frontend_ip+"/search";
         else
-            window.location.href=encodeURI("http://localhost:3000/search?name="+searchText);
+            window.location.href=encodeURI("http://"+frontend_ip+"/search?name="+searchText);
 
     }
     render=()=> {
@@ -130,7 +130,7 @@ class HeaderRight extends React.Component{
         fetch("http://"+server_ip+"/exitLogin", {
             credentials: 'include'
         }).then(()=>{
-            window.location.href="http://localhost:3000/login"
+            window.location.href="http://"+frontend_ip+"/login"
         })
         ;
     }

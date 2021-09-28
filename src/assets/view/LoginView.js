@@ -2,6 +2,7 @@ import React from "react"
 import './css/login.css'
 import {ThemeLine} from "../../App";
 import {server_ip} from '../../App'
+import {frontend_ip} from "../../App";
 
 class LoginForm extends React.Component{
     constructor(props) {
@@ -57,7 +58,7 @@ class LoginForm extends React.Component{
                 // localStorage.setItem("user_id",user_id);
                 // localStorage.setItem("user_name",this.state.username);
                 // localStorage.setItem("user_type",user_type)
-                window.location.href="http://localhost:3000"
+                window.location.href="http://"+frontend_ip;
             }
         })
 
