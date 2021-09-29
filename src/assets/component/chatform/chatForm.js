@@ -2,12 +2,14 @@ import React from "react";
 import {server_ip}  from '../../../App'
 
 let ws;
+
 class ChatForm extends React.Component{
     constructor(props) {
         super(props);
         this.state={
             messages:[],
             nickname:null,
+            onlineUsers:[]
         }
     }
 
@@ -62,9 +64,36 @@ class ChatForm extends React.Component{
 
     onMessage=(e)=>{
         let messages=this.state.messages;
-        messages.push(e.data);
+        let onlineUsers=this.state.onlineUsers;
+        let data=JSON.parse(e.data);
+        let message;
+        if(data.type==="join")
+        {
+            message="["+data.username+"]加入了聊天室！";
+            onlineUsers.push(data.username);
+        }
+        else if(data.type==="exit")
+        {
+            message = "[" + data.username + "]离开了聊天室！"
+            let index=onlineUsers.indexOf(data.username);
+            onlineUsers.splice(index,1);
+        }
+        else if(data.type==="message")
+            message=data.message;
+        else if(data.type==="update")
+        {
+            onlineUsers=[];
+
+            let usernames=JSON.parse(data.usernames);
+            console.log(usernames)
+            usernames.map((username)=>{
+                onlineUsers.push(username);
+            })
+        }
+        messages.push(message);
         this.setState({
-            messages:messages
+            messages:messages,
+            onlineUsers:onlineUsers
         })
         this.scrollToBottom();
     }
@@ -95,20 +124,60 @@ class ChatForm extends React.Component{
             >{message[i]}</div>)
         return content;
     }
+
+    renderOnlineUsers=()=>{
+        let content=[];
+        let onlineUsers=this.state.onlineUsers;
+        content.push(<div
+            key={"hahaha"}
+            style={{
+                fontSize:"15px",
+            }}
+        >{"当前在线人数 " + onlineUsers.length}</div>);
+        for(let i=0;i<onlineUsers.length;i++)
+            content.push(<div
+                style={{
+                    fontSize:"15px",
+                }}
+            >
+                {onlineUsers[i]}
+            </div>)
+        return content;
+    }
+
     renderChatForm=()=>{
         return(
             <div>
                 <div
-                    ref={div=>this.messagesRef=div}
                     style={{
                         width:"100%",
-                        height:"600px",
-                        border:"1px solid #ccc",
-                        overflow:"scroll",
-                        padding:"8px"
+                        display:"flex"
                     }}
                 >
-                    {this.getMessageContent()}
+                    <div
+                        ref={div=>this.messagesRef=div}
+                        style={{
+                            width:"100%",
+                            height:"600px",
+                            border:"1px solid #ccc",
+                            overflow:"scroll",
+                            padding:"8px",
+                            flexGrow:1
+                        }}
+                    >
+                        {this.getMessageContent()}
+                    </div>
+                    <div
+                        style={{
+                            width:"200px",
+                            height:"600px",
+                            border:"1px solid #ccc",
+                            overflow:"scroll",
+                            padding:"8px"
+                        }}
+                    >
+                        {this.renderOnlineUsers()}
+                    </div>
                 </div>
                 <div
                     style={{

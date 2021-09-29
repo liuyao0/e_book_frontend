@@ -13,8 +13,8 @@ import {OrderView} from "./assets/view/OrderView";
 import {IndexView} from "./assets/view/IndexView";
 import {ChatView} from "./assets/view/ChatView";
 
-export const server_ip="1.117.55.184:8080";
-export const frontend_ip="1.117.55.184:5000";
+export const server_ip="localhost:8080";
+export const frontend_ip="localhost:3000";
 
 export function getLoginInf(that) {
     fetch("http://"+server_ip+"/getLoggedUsernameAndUserType",{
