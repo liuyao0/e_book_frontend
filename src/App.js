@@ -50,11 +50,22 @@ export class ThemeLine extends React.Component{
     }
 }
 
+function doVisit()
+{
+    if(sessionStorage.getItem("visited"))
+        return;
+    sessionStorage.setItem("visited","true");
+    fetch("http://"+server_ip+"/visit").then(response=>response.json())
+        .then(()=>{
+
+        })
+}
 
 
 
 
 function App(){
+    doVisit();
     return(
          <Router>
             <Switch>

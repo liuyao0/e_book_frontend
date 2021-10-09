@@ -124,8 +124,22 @@ class Logo extends React.Component{
 class HeaderRight extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            visitorVolume:0
+        }
 
     }
+
+    componentDidMount() {
+        fetch("http://"+server_ip+"/getVisitorVolume").then(response=>response.json())
+            .then((data)=>{
+                let visitorVolume=parseInt(data,10);
+                this.setState({
+                    visitorVolume:visitorVolume
+                })
+            })
+    }
+
     quitLogin=()=>{
         fetch("http://"+server_ip+"/exitLogin", {
             credentials: 'include'
@@ -138,18 +152,30 @@ class HeaderRight extends React.Component{
         if(!this.props.user_name)
             return(
                 <div id="header-right">
-                    <a href="/login">登录</a>
+                    <div>
+                        {"访问量："+this.state.visitorVolume}
+                    </div>
+                   <div>
+                       <a  style={{float:"right"}} href="/login">登录</a>
+                   </div>
                 </div>
             )
         else
             return (
                 <div id={"header-right"}>
-                    <span>
+                    <div>
+                        {"访问量："+this.state.visitorVolume}
+                    </div
+                       >
+                    <div>
+                        <span>
                         你好,{this.props.user_name+"   "}
                     </span>
-                    <a onClick={this.quitLogin}>
+                        <a onClick={this.quitLogin}>
                             退出
-                    </a>
+                        </a>
+                    </div>
+
                 </div>
             )
     }

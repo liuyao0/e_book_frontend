@@ -113,19 +113,27 @@ header
     right: 2px;
 }
 
-#header-right>a
+#header-right a
+{
+    font-size: 12px;
+    color: darkgray;
+    text-decoration:none;
+    text-align: right;
+}
+
+#header-right div
 {
     font-size: 12px;
     color: darkgray;
     text-decoration:none;
 }
 
-#header-right>a:visited
+#header-right a:visited
 {
     color: darkgray;
 }
 
-#header-right>a:hover
+#header-right a:hover
 {
     color: #35a7a7;
 }
