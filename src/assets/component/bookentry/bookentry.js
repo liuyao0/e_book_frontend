@@ -11,39 +11,31 @@ class BookEntry extends React.Component{
             pageNum:0,
             currentPage:0,
         }
-
-        fetch("http://"+server_ip+"/")
+        let href = decodeURI(window.location.href);
+        let i = href.indexOf("=");
+        let name=href.substr(i+1,href.length-i+1);
+        let fetchUrl;
+        if(i<0)
+        {
+            fetchUrl="http://"+server_ip+"/";
+        }
+        else
+        {
+            fetchUrl="http://"+server_ip+"/search?key="+name;
+        }
+        fetch(fetchUrl)
             .then(response => response.json())
             .then(bookData => {
-                let href = decodeURI(window.location.href);
-                let i = href.indexOf("=");
                 let pageNum=Math.round(bookData.length/entryPerPage);
                 if(pageNum*entryPerPage<bookData.length)
                     pageNum++;
-                if (i < 0) {
+
                     this.setState({
                         bookData: bookData,
                         pageNum:pageNum,
                         currentPage:1
                     });
-                    return;
-                }
-                let name=href.substr(i+1,href.length-i+1);
-                bookData=bookData.filter((row)=>{
-                    if(row[1].indexOf(name)<0)
-                        return false;
-                    else
-                        return true;
-                })
-                pageNum=Math.round(bookData.length/entryPerPage)+1;
-                if(pageNum*entryPerPage<bookData.length)
-                    pageNum++;
-                this.setState({
-                    bookData:bookData,
-                    pageNum:pageNum,
-                    currentPage:1
-                })
-            })
+            });
     }
     toFirstPage=()=>{
         this.setState({currentPage:1});
