@@ -41,7 +41,7 @@ class LoginForm extends React.Component{
             return;
         }
         let user_id=-2,user_type=1
-        fetch("http://"+server_ip+"/login?username=" + this.state.username + "&password=" + this.state.password, {
+        fetch("https://"+server_ip+"/login?username=" + this.state.username + "&password=" + this.state.password, {
             credentials: 'include'
         }).then(response => response.text()).then(data=>{
             data=data.split(",");
@@ -58,7 +58,7 @@ class LoginForm extends React.Component{
                 // localStorage.setItem("user_id",user_id);
                 // localStorage.setItem("user_name",this.state.username);
                 // localStorage.setItem("user_type",user_type)
-                window.location.href="http://"+frontend_ip;
+                window.location.href="https://"+frontend_ip;
             }
         })
 
@@ -114,7 +114,7 @@ class RegisterForm extends React.Component{
             return;
         }
         this.setState({username:username})
-        fetch("http://"+server_ip+"/usernameExist?username="+username).then(response => response.text())
+        fetch("https://"+server_ip+"/usernameExist?username="+username).then(response => response.text())
             .then(data=>{
                 console.log(data);
                 if(parseInt(data,10)===0)
@@ -214,7 +214,7 @@ class RegisterForm extends React.Component{
             return;
         }
 
-        fetch("http://"+server_ip+"/addUser?username="+this.state.username+"&password="+this.state.password+"&email="+this.state.email).then();
+        fetch("https://"+server_ip+"/addUser?username="+this.state.username+"&password="+this.state.password+"&email="+this.state.email).then();
         alert("注册成功！");
         this.props.closeRegister();
     }

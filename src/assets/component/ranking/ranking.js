@@ -155,7 +155,7 @@ class Ranking extends React.Component{
             return;
         }
         let bookData=[],userData=[];
-        fetch("http://"+server_ip+"/getSalesRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
+        fetch("https://"+server_ip+"/getSalesRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
             .then(data => {
                 bookData=data;
                 }
@@ -166,7 +166,7 @@ class Ranking extends React.Component{
             }
         );
 
-        fetch("http://"+server_ip+"/getConsumeRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
+        fetch("https://"+server_ip+"/getConsumeRanking?begin_time="+BeginDate.getTime().toString()+"&end_time="+EndDate.getTime().toString()).then(response => response.json())
             .then(data => {
                     userData=data;
                 }

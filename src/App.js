@@ -13,11 +13,12 @@ import {OrderView} from "./assets/view/OrderView";
 import {IndexView} from "./assets/view/IndexView";
 import {ChatView} from "./assets/view/ChatView";
 
-export const server_ip="localhost:8080";
+export const server_ip="localhost:8443";
+export const server_cal_ip="localhost:8090";
 export const frontend_ip="localhost:3000";
 
 export function getLoginInf(that) {
-    fetch("http://"+server_ip+"/getLoggedUsernameAndUserType",{
+    fetch("https://"+server_ip+"/getLoggedUsernameAndUserType",{
         credentials: 'include'
     })
         .then(response => response.text())
@@ -55,7 +56,7 @@ function doVisit()
     if(sessionStorage.getItem("visited"))
         return;
     sessionStorage.setItem("visited","true");
-    fetch("http://"+server_ip+"/visit").then(response=>response.json())
+    fetch("https://"+server_ip+"/visit").then(response=>response.json())
         .then(()=>{
 
         })

@@ -1,7 +1,7 @@
 import React from 'react';
 import './cart.css'
 import {NumComponent} from '../numadjust/numadjust'
-import {frontend_ip, server_ip} from '../../../App'
+import {frontend_ip, server_ip,server_cal_ip} from '../../../App'
 const cartHeaders=['书名','作者','出版社','单价','数量','总价','操作'];
 
 
@@ -11,18 +11,15 @@ class Cart extends React.Component{
         let user_id=props.user_id;
         this.state={load:false};
 
-        fetch("http://"+server_ip+"/cart",{
+        fetch("https://"+server_ip+"/cart",{
             credentials: 'include'
         })
             .then(response => response.json())
             .then(cartData => {
-                let total=0;
-                cartData.map((row,idx)=>{
-                    total+=row[6]*row[7];
-                })
+                this.calculateTotal(cartData);
                 this.setState({
                         cartData: cartData,
-                        total:total,
+                        total:0,
                         load:true
                     }
                 )
@@ -32,15 +29,42 @@ class Cart extends React.Component{
         })
     }
 
+    _strMapToObj(strMap){
+        let obj= Object.create(null);
+        for (let[k,v] of strMap) {
+            obj[k] = v;
+        }
+        return obj;
+    }
+
+    calculateTotal=(cartData)=>{
+        let map=new Map();
+        cartData.map((row)=>{
+            let price=row[6];
+            let num=row[7];
+            if(map.has(price))
+                map.set(price,map.get(price)+num);
+            else
+                map.set(price,num);
+        });
+
+        fetch("http://"+server_cal_ip+"/calculateTotal",{
+            method:'POST',
+            body:JSON.stringify(this._strMapToObj(map))
+        }).then(response=>response.json()).then(data=>{
+            this.setState({total:data[0]})
+        })
+    }
+
     cartToOrder=()=>{
-        fetch("http://"+server_ip+"/carttoorder",{
+        fetch("https://"+server_ip+"/carttoorder",{
             credentials: 'include'
         }).then(response => response.text())
             .then(res=> {
                 if(res.length===0)
                 {
                     alert("服务器已接收订单！!")
-                    window.location.href="http://"+frontend_ip+"/me";
+                    window.location.href="https://"+frontend_ip+"/me";
                 }
                 else
                     alert(res)
@@ -50,25 +74,31 @@ class Cart extends React.Component{
     }
 
     numChange=(e,idx)=>{
-        fetch("http://"+server_ip+"/cartchange?book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString(),{
+        fetch("https://"+server_ip+"/cartchange?book_id="+this.state.cartData[idx][0].toString()+"&num="+e.toString(),{
             credentials: 'include'
         });
-        console.log(idx);
         let newData=this.state.cartData;
         newData[idx][7]=e;
-        let total=0;
-        newData.map(function (row,i){
-            total+=row[6]*row[7];
-        });
+
+
+        // let total=0;
+        // newData.map(function (row,i){
+        //     total+=row[6]*row[7];
+        // });
+        // this.setState({
+        //     cartData:newData,
+        //     total:total
+        // })
+
         this.setState({
             cartData:newData,
-            total:total
         })
+        this.calculateTotal(newData);
     }
 
     handleDelete=(e)=>
     {
-        fetch("http://"+server_ip+"/cartdel?book_id="+this.state.cartData[e.target.dataset.idx][0].toString(),{
+        fetch("https://"+server_ip+"/cartdel?book_id="+this.state.cartData[e.target.dataset.idx][0].toString(),{
             credentials: 'include'
         });
         let newdata=this.state.cartData;
@@ -78,7 +108,9 @@ class Cart extends React.Component{
             total+=row[6]*row[7];
         });
         this.setState({cartData: newdata,
-            total:total});
+            //total:total
+        });
+        this.calculateTotal(newdata);
     }
 
     render=()=> {

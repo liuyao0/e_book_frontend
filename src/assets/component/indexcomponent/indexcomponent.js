@@ -92,9 +92,9 @@ class SearchBar extends React.Component{
     handleSearch=()=>{
         let searchText=this.inputRef.value;
         if(searchText.length===0)
-            window.location.href="http://"+frontend_ip+"/search";
+            window.location.href="https://"+frontend_ip+"/search";
         else
-            window.location.href=encodeURI("http://"+frontend_ip+"/search?name="+searchText);
+            window.location.href=encodeURI("https://"+frontend_ip+"/search?name="+searchText);
 
     }
     render=()=> {
@@ -131,7 +131,7 @@ class HeaderRight extends React.Component{
     }
 
     componentDidMount() {
-        fetch("http://"+server_ip+"/getVisitorVolume").then(response=>response.json())
+        fetch("https://"+server_ip+"/getVisitorVolume").then(response=>response.json())
             .then((data)=>{
                 let visitorVolume=parseInt(data,10);
                 this.setState({
@@ -141,10 +141,10 @@ class HeaderRight extends React.Component{
     }
 
     quitLogin=()=>{
-        fetch("http://"+server_ip+"/exitLogin", {
+        fetch("https://"+server_ip+"/exitLogin", {
             credentials: 'include'
         }).then(()=>{
-            window.location.href="http://"+frontend_ip+"/login"
+            window.location.href="https://"+frontend_ip+"/login"
         })
         ;
     }

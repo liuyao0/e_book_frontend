@@ -2,9 +2,18 @@ import React from 'react';
 import './bookdetail.css'
 import {NumComponent} from '../numadjust/numadjust'
 import {server_ip}  from '../../../App'
+import {Comment} from "../comment/comment";
 
 
 class BookDetail extends React.Component{
+    getBookId=()=>{
+        let book_id="";
+        let href=window.location.href;
+        for(let i=href.length-1;href[i]>='0'&&href[i]<='9';i--)
+            book_id+=href[i];
+        book_id=book_id.split("").reverse().join("");
+        return book_id;
+    }
     constructor(props) {
         super(props);
 
@@ -12,13 +21,9 @@ class BookDetail extends React.Component{
             load:false,
             num:1
         };
-        let href=window.location.href;
-        let book_id="";
-        for(let i=href.length-1;href[i]>='0'&&href[i]<='9';i--)
-            book_id+=href[i];
-        book_id=book_id.split("").reverse().join("");
+        let book_id=this.getBookId();
 
-        fetch("http://"+server_ip+"/bookdetail?book-id="+book_id)
+        fetch("https://"+server_ip+"/bookdetail?book-id="+book_id)
             .then(response => response.json())
             .then(bookData => {
                 let bookDetail=[];
@@ -39,7 +44,7 @@ class BookDetail extends React.Component{
     }
 
     addToCart=()=>{
-        fetch("http://"+server_ip+"/cartadd?"+
+        fetch("https://"+server_ip+"/cartadd?"+
             "book_id="+this.state.data[0].toString()+
             "&num="+this.state.num,{
             credentials: 'include'
@@ -71,24 +76,34 @@ class BookDetail extends React.Component{
             )
         else
         return (
-            <div id="book-detail-main">
-                <div id="book-detail-bookimage_out">
-                    <img src={this.state.data[8]} id="book-detail-bookimg"/>
+            <div>
+                <div id="book-detail-main">
+                    <div id="book-detail-bookimage_out">
+                        <img src={this.state.data[8]} id="book-detail-bookimg"/>
+                    </div>
+                    <div id="book-detail-book_info">
+                        <h2>{this.state.data[1]}</h2>
+                        <p className="nobr">作者：</p>
+                        <span href="#">{this.state.data[3]}</span><br/>
+                        <p className="nobr">出版社：</p>
+                        <span href="#">{this.state.data[4]}</span><br/>
+                        <p className="nobr">库存：</p>
+                        <span href="#">{this.state.data[7]}</span><br/>
+                        <h2 id="book-detail-price">¥{this.state.data[5].toFixed(2)}</h2>
+                        <p id="book-detail-content">{this.state.data[6]}
+                        </p>
+                        <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange} maxValue={this.state.data[7]}/>
+                        <h2 style={{display:'inline'}} id="book-detail-total" >¥{this.state.total.toFixed(2)}</h2>
+                        <button style={{display:"inline-block"}} className="book-detail-tocart" onClick={this.addToCart}>加入购物车</button>
+                    </div>
                 </div>
-                <div id="book-detail-book_info">
-                    <h2>{this.state.data[1]}</h2>
-                    <p className="nobr">作者：</p>
-                    <span href="#">{this.state.data[3]}</span><br/>
-                    <p className="nobr">出版社：</p>
-                    <span href="#">{this.state.data[4]}</span><br/>
-                    <p className="nobr">库存：</p>
-                    <span href="#">{this.state.data[7]}</span><br/>
-                    <h2 id="book-detail-price">¥{this.state.data[5].toFixed(2)}</h2>
-                    <p id="book-detail-content">{this.state.data[6]}
-                    </p>
-                    <NumComponent style={{display:'inline-block'}} initval={1} numChange={this.numChange} maxValue={this.state.data[7]}/>
-                    <h2 style={{display:'inline'}} id="book-detail-total" >¥{this.state.total.toFixed(2)}</h2>
-                    <button style={{display:"inline-block"}} className="book-detail-tocart" onClick={this.addToCart}>加入购物车</button>
+                <div
+                    style={{
+                        width:'80%',
+                        margin:"auto"
+                    }}
+                >
+                    <Comment book_id={this.getBookId()}/>
                 </div>
             </div>
         );

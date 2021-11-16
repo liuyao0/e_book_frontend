@@ -20,7 +20,7 @@ class UserTable extends React.Component{
     constructor(props) {
         super(props);
         this.state={userData:[]}
-        fetch("http://"+server_ip+"/allUser").then(response => response.json())
+        fetch("https://"+server_ip+"/allUser").then(response => response.json())
             .then(userData => {
                 userData.map((row)=>{
                     if(row[4]===true)
@@ -44,7 +44,7 @@ class UserTable extends React.Component{
         this.setState({
             userData: newData
         })
-        fetch("http://"+server_ip+"/setUserState?user_id="+user_id.toString()+"&state="+value.toString()).then(
+        fetch("https://"+server_ip+"/setUserState?user_id="+user_id.toString()+"&state="+value.toString()).then(
             response => response.text()
         ).then(result=>{
             let res=parseInt(result,10);

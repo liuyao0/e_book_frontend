@@ -52,7 +52,7 @@ class FormDialog extends React.Component {
             })
 
             if(nextProps.book_id!==-1){
-                fetch("http://"+server_ip+"/bookdetail?book-id="+nextProps.book_id)
+                fetch("https://"+server_ip+"/bookdetail?book-id="+nextProps.book_id)
                     .then(response => response.json())
                     .then(bookData => {
                         let bookDetail=[];
@@ -257,7 +257,7 @@ class BookManagerNoStyle extends React.Component{
             operateState:0
         }
 
-        fetch("http://"+server_ip+"/allBookInManager").then(response => response.json())
+        fetch("https://"+server_ip+"/allBookInManager").then(response => response.json())
             .then(data => {
                 this.setState({
                     data:data,
@@ -375,7 +375,7 @@ class BookManagerNoStyle extends React.Component{
                 "imgUrl":bookRow[8]
             })
         }
-        fetch("http://"+server_ip+"/changeBook",infToService).then(response=>response.text())
+        fetch("https://"+server_ip+"/changeBook",infToService).then(response=>response.text())
             .then(res=>{
                 res=parseInt(res,10);
                 newRow[0]=res;
@@ -416,10 +416,10 @@ class BookManagerNoStyle extends React.Component{
             return;
         }
         active.map((idx,i)=>{
-            fetch("http://"+server_ip+"//delbook?book-id="+this.state.data[idx][0]).then(response => response.text())
+            fetch("https://"+server_ip+"//delbook?book-id="+this.state.data[idx][0]).then(response => response.text())
                 .then(data=>{}).then(()=>{
                 if(i===active.length-1)
-                    fetch("http://"+server_ip+"/allBookInManager").then(response => response.json())
+                    fetch("https://"+server_ip+"/allBookInManager").then(response => response.json())
                         .then(data => {
                             this.setState({
                                 data:data,

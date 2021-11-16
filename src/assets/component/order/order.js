@@ -73,7 +73,7 @@ class Order extends React.Component{
 
         if(this.props.showUserName)
         {
-            fetch("http://"+server_ip+"/allOrder")
+            fetch("https://"+server_ip+"/allOrder")
                 .then(response => response.json())
                 .then(orderData => {
                     this.setState({
@@ -86,7 +86,7 @@ class Order extends React.Component{
                 console.log('parsing failed', ex)
             })
         }else{
-            fetch("http://"+server_ip+"/orderInfo",{
+            fetch("https://"+server_ip+"/orderInfo",{
                 credentials: 'include'
             })
                 .then(response => response.json())

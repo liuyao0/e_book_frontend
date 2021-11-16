@@ -17,11 +17,11 @@ class BookEntry extends React.Component{
         let fetchUrl;
         if(i<0)
         {
-            fetchUrl="http://"+server_ip+"/";
+            fetchUrl="https://"+server_ip+"/";
         }
         else
         {
-            fetchUrl="http://"+server_ip+"/search?key="+name;
+            fetchUrl="https://"+server_ip+"/search?key="+name;
         }
         fetch(fetchUrl)
             .then(response => response.json())

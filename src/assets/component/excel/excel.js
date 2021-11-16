@@ -13,7 +13,7 @@ class Excel extends React.Component {
             search: false,
             preSearchData: null,
         };
-        fetch("http://"+server_ip+"/")
+        fetch("https://"+server_ip+"/")
             .then(response => response.json())
             .then(bookData => {
                 bookData.map(function (row,rowidx){

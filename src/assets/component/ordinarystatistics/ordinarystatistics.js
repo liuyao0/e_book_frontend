@@ -49,7 +49,7 @@ class OrdinaryStatistics extends React.Component{
             return;
         }
         let bookData=[],userData=[];
-        fetch("http://"+server_ip+"/getConsumeBook?begin_time="+BeginDate.getTime().toString()+
+        fetch("https://"+server_ip+"/getConsumeBook?begin_time="+BeginDate.getTime().toString()+
             "&end_time="+EndDate.getTime().toString(),{
              credentials:"include"
             }
